@@ -1,4 +1,4 @@
-package com.example.toxicapplication.appUser;
+package com.example.toxicapplication.appUser.userDetails;
 
 import com.example.toxicapplication.registration.token.ConfirmationTokenEntity;
 import com.example.toxicapplication.registration.token.ConfirmationTokenService;
@@ -25,17 +25,17 @@ public class AppUserService implements UserDetailsService {
     private final ConfirmationTokenService confirmationTokenService;
 
     @Override
-    public UserDetails loadUserByUsername(String email)
+    public UserDetails loadUserByUsername(String userName)
             throws UsernameNotFoundException {
-        return appUserRepository.findByEmail(email)
+        return appUserRepository.findByUserName(userName)
                 .orElseThrow(() ->
                         new UsernameNotFoundException(
-                                String.format(USER_NOT_FOUND_MSG, email)));
+                                String.format(USER_NOT_FOUND_MSG, userName)));
     }
 
     public String signUpUser(AppUser appUser) {
         boolean userExists = appUserRepository
-                .findByEmail(appUser.getEmail())
+                .findByUserName(appUser.getUsername())
                 .isPresent();
 
         if (userExists) {

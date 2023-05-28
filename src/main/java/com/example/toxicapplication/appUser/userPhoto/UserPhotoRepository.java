@@ -7,6 +7,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface UserPhotoRepository extends JpaRepository<UserPhotoEntity, Long> {
-    @Query("SELECT p.id FROM UserPhotoEntity p WHERE p.id = :userId")
-    List<Long> findImageIdsByUserId(@Param("userId") Long userId);
+//    @Query("SELECT p.id FROM UserPhotoEntity p WHERE p.id = :userId")
+//    List<Long> findImageIdsByUserId(@Param("userId") Long userId);
+
+   // UserPhotoEntity findUserPhotoEntityById(Long id);
 }

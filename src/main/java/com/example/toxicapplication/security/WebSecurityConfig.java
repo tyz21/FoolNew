@@ -1,6 +1,6 @@
 package com.example.toxicapplication.security;
 
-import com.example.toxicapplication.appUser.AppUserService;
+import com.example.toxicapplication.appUser.userDetails.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

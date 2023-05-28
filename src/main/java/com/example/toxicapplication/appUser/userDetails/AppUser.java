@@ -1,4 +1,4 @@
-package com.example.toxicapplication.appUser;
+package com.example.toxicapplication.appUser.userDetails;
 
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 import com.sun.istack.NotNull;
@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -31,9 +32,8 @@ public class AppUser implements UserDetails {
 
     @Column(unique = true)
     @NotNull
-    private String firstName;
-
-    private String lastName;
+    private String userName;
+    @Email(message = "Invalid email address")
     private String email;
     private String password;
 
@@ -46,13 +46,8 @@ public class AppUser implements UserDetails {
     @OneToOne(mappedBy = "appUser", cascade = CascadeType.ALL)
     private ProfileUserEntity profileUserEntity;
 
-    public AppUser(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public AppUser(String firstName, String lastName, String email, String password, AppUserRole appUserRole) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public AppUser(String userName, String email, String password, AppUserRole appUserRole) {
+        this.userName = userName;
         this.email = email;
         this.password = password;
         this.appUserRole = appUserRole;
@@ -67,7 +62,7 @@ public class AppUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return userName;
     }
 
     @Override

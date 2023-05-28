@@ -1,6 +1,6 @@
 package com.example.toxicapplication.appUser.userPhoto;
 
-import com.example.toxicapplication.appUser.AppUser;
+import com.example.toxicapplication.appUser.userDetails.AppUser;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +15,9 @@ import javax.persistence.*;
 public class UserPhotoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;@ManyToOne(fetch = FetchType.LAZY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
 
@@ -28,6 +30,9 @@ public class UserPhotoEntity {
     @Column
     private double ratingPhoto;
 
+    @Column
+    private Long topPhoto;
+
     @PrePersist
     private void updateProfileUserEntity() {
         if (appUser != null && id != null) {
@@ -39,7 +44,6 @@ public class UserPhotoEntity {
             profileUser.getAllIdPhotoUser().add(id);
         }
     }
-
     public UserPhotoEntity(AppUser appUser, String imagePath) {
         this.appUser = appUser;
         if (imagePath.contains("/rectangle")) {

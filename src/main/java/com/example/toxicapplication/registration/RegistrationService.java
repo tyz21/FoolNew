@@ -1,9 +1,9 @@
 package com.example.toxicapplication.registration;
 
-import com.example.toxicapplication.appUser.AppUser;
-import com.example.toxicapplication.appUser.AppUserRepository;
-import com.example.toxicapplication.appUser.AppUserRole;
-import com.example.toxicapplication.appUser.AppUserService;
+import com.example.toxicapplication.appUser.userDetails.AppUser;
+import com.example.toxicapplication.appUser.userDetails.AppUserRepository;
+import com.example.toxicapplication.appUser.userDetails.AppUserRole;
+import com.example.toxicapplication.appUser.userDetails.AppUserService;
 import com.example.toxicapplication.email.EmailSender;
 import com.example.toxicapplication.registration.token.ConfirmationTokenEntity;
 import com.example.toxicapplication.registration.token.ConfirmationTokenService;
@@ -29,13 +29,15 @@ public class RegistrationService {
         if (!isValidEmail) {
             return "email not valid";
         }
-        if (appUserRepository.existsByFirstName(request.getFirstName())) {
+        if (appUserRepository.existsByUserName(request.getUserName())) {
             return "Username already exists";
+        }
+        if (appUserRepository.existsByEmail(request.getEmail())) {
+            return "email already exists";
         }
         String token = appUserService.signUpUser(
                 new AppUser(
-                        request.getFirstName(),
-                        request.getLastName(),
+                        request.getUserName(),
                         request.getEmail(),
                         request.getPassword(),
                         AppUserRole.USER
@@ -45,7 +47,7 @@ public class RegistrationService {
         String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
         emailSender.send(
                 request.getEmail(),
-                buildEmail(request.getFirstName(), link));
+                buildEmail(request.getUserName(), link));
 
         return token;
     }

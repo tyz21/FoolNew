@@ -1,6 +1,6 @@
 package com.example.toxicapplication.login;
 
-import com.example.toxicapplication.appUser.AppUserService;
+import com.example.toxicapplication.appUser.userDetails.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,16 +21,16 @@ public class LoginController {
     private AuthenticationManager authenticationManager;
 
     @GetMapping()
-    public String login(@RequestParam String email, @RequestParam String password) {
+    public String login(@RequestParam String userName, @RequestParam String password) {
         try {
-            UserDetails userDetails = appUserService.loadUserByUsername(email);
-//ToDO loadUserByUsername by UserName
+            UserDetails userDetails = appUserService.loadUserByUsername(userName);
+     //ToDO loadUserByUsername by UserName
 
             if (!userDetails.isEnabled()) {
                 return "confirm your email";
             }
             Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    email,
+                    userName,
                     password
             );
 
@@ -38,6 +38,7 @@ public class LoginController {
             SecurityContextHolder.getContext().setAuthentication(authenticated);
 
             return "Login successful!";
+
         } catch (AuthenticationException e) {
             return "check email or password";
         }
