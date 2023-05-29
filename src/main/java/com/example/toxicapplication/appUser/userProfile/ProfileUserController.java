@@ -22,4 +22,5 @@ public class ProfileUserController {
     public ProfileUserEntity getProfileUser(@PathVariable Long profileId) {
         return profileUserService.getProfile(profileId);
     }
+
 }

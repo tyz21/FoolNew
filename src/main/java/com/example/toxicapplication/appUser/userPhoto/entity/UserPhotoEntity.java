@@ -1,4 +1,4 @@
-package com.example.toxicapplication.appUser.userPhoto;
+package com.example.toxicapplication.appUser.userPhoto.entity;
 
 import com.example.toxicapplication.appUser.userDetails.AppUser;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;

@@ -1,6 +1,7 @@
 package com.example.toxicapplication.appUser.userProfile;
 
 import com.example.toxicapplication.appUser.userDetails.AppUser;
+import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,6 +24,10 @@ public class ProfileUserEntity implements Serializable {
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private UserPhotoEntity userPhotoEntity;
+    @Column
+    private long lastIdAddPhoto;
     @Column
     private double ratingUser;
     @Column
@@ -37,6 +42,10 @@ public class ProfileUserEntity implements Serializable {
     public ProfileUserEntity(AppUser appUser) {
         this.appUser = appUser;
         this.allIdPhotoUser = "";
+    }
+
+    public void setRatingUser(double ratingUser) {
+        this.ratingUser = ratingUser;
     }
 
     public List<Long> getAllIdPhotoUser() {

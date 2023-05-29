@@ -1,7 +1,8 @@
-package com.example.toxicapplication.appUser.userPhoto;
+package com.example.toxicapplication.appUser.userPhoto.controller;
 
 import com.example.toxicapplication.appUser.userDetails.AppUser;
 import com.example.toxicapplication.appUser.userDetails.AppUserRepository;
+import com.example.toxicapplication.appUser.userPhoto.service.UserPhotoService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -45,5 +46,8 @@ public class UserPhotoController {
         headers.setContentLength(imageBytes.length);
         return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
     }
-
+//    @PostMapping("/rating/{profileId}")
+//    public double getRating(@PathVariable Long profileId, @RequestParam("rating") double rating){
+//        return userPhotoService.postRating(profileId, rating);
+//    }
 }

@@ -1,8 +1,11 @@
-package com.example.toxicapplication.appUser.userPhoto;
+package com.example.toxicapplication.appUser.userPhoto.service;
 
 import com.example.toxicapplication.appUser.userDetails.AppUser;
 import com.example.toxicapplication.appUser.userDetails.AppUserRepository;
+import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
+import com.example.toxicapplication.appUser.userPhoto.reposirory.UserPhotoRepository;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
+import com.example.toxicapplication.appUser.userProfile.ProfileUserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,7 +23,9 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserPhotoService {
     private final UserPhotoRepository userPhotoRepository;
+    private final ProfileUserRepository profileUserRepository;
     private final AppUserRepository appUserRepository;
+
 
     @Transactional
     public String saveImageRectangle(AppUser appUser, byte[] imageBytes, String imageName) throws IOException {
@@ -31,7 +36,7 @@ public class UserPhotoService {
         File folder = new File(rectangleFolder);
         if (!folder.exists()) {
             folder.mkdirs();
-         //   Files.createDirectories(Paths.get("images", appUser.getId().toString()));
+            //   Files.createDirectories(Paths.get("images", appUser.getId().toString()));
         }
 
         Files.write(Paths.get(imagePath), imageBytes);
@@ -39,6 +44,7 @@ public class UserPhotoService {
         appUser = appUserRepository.findById(appUser.getId()).orElse(appUser);
 
         UserPhotoEntity userPhotoEntity = new UserPhotoEntity(appUser, imagePath);
+
         userPhotoRepository.save(userPhotoEntity);
 
         ProfileUserEntity profileUserEntity = appUser.getProfileUserEntity();
@@ -50,6 +56,7 @@ public class UserPhotoService {
         photoIds.add(userPhotoEntity.getId());
         profileUserEntity.setAllIdPhotoUser(photoIds);
 
+        profileUserEntity.setLastIdAddPhoto(userPhotoEntity.getId());
         return imagePath;
     }
 
@@ -66,4 +73,29 @@ public class UserPhotoService {
         return Files.readAllBytes(Paths.get(imagePath));
     }
 
+//    public double getRating(Long profileId, double rating) {
+//        ProfileUserEntity profileUser = profileUserRepository.findById(profileId).get();
+//        Optional<UserPhotoEntity> optionalImage = userPhotoRepository.findById(profileUser.getLastIdAddPhoto());
+//        if (optionalImage.isEmpty()) {
+//            return 0.0; // Nothing to return
+//        }
+//        UserPhotoEntity userPhotoEntity = optionalImage.get();
+//        double currentRating = userPhotoEntity.getRatingPhoto();
+//        if (currentRating == 0) {
+//            userPhotoEntity.setRatingPhoto(rating);
+//        } else {
+//            double newRatingPhoto = (currentRating + rating) / 2.0;
+//            userPhotoEntity.setRatingPhoto(newRatingPhoto);
+//        }
+//        setRatingForProfile(profileId);
+//        userPhotoRepository.save(userPhotoEntity);
+//        return userPhotoEntity.getRatingPhoto();
+//    }
+//
+//    public void setRatingForProfile(Long id) { // for current user
+//        ProfileUserEntity profileUser = profileUserRepository.findById(id).get();
+//        UserPhotoEntity userPhotoEntity = userPhotoRepository.findById(profileUser.getLastIdAddPhoto()).get();
+//        double ratingPhoto = userPhotoEntity.getRatingPhoto();
+//        profileUser.setRatingUser(ratingPhoto);
+//    }
 }
