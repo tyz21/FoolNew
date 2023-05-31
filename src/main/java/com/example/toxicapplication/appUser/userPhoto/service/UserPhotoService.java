@@ -73,29 +73,14 @@ public class UserPhotoService {
         return Files.readAllBytes(Paths.get(imagePath));
     }
 
-//    public double getRating(Long profileId, double rating) {
-//        ProfileUserEntity profileUser = profileUserRepository.findById(profileId).get();
-//        Optional<UserPhotoEntity> optionalImage = userPhotoRepository.findById(profileUser.getLastIdAddPhoto());
-//        if (optionalImage.isEmpty()) {
-//            return 0.0; // Nothing to return
-//        }
-//        UserPhotoEntity userPhotoEntity = optionalImage.get();
-//        double currentRating = userPhotoEntity.getRatingPhoto();
-//        if (currentRating == 0) {
-//            userPhotoEntity.setRatingPhoto(rating);
-//        } else {
-//            double newRatingPhoto = (currentRating + rating) / 2.0;
-//            userPhotoEntity.setRatingPhoto(newRatingPhoto);
-//        }
-//        setRatingForProfile(profileId);
-//        userPhotoRepository.save(userPhotoEntity);
-//        return userPhotoEntity.getRatingPhoto();
-//    }
-//
-//    public void setRatingForProfile(Long id) { // for current user
-//        ProfileUserEntity profileUser = profileUserRepository.findById(id).get();
-//        UserPhotoEntity userPhotoEntity = userPhotoRepository.findById(profileUser.getLastIdAddPhoto()).get();
-//        double ratingPhoto = userPhotoEntity.getRatingPhoto();
-//        profileUser.setRatingUser(ratingPhoto);
-//    }
+    public List<Long> getAllIdImage(Long profileId) {
+        ProfileUserEntity profileUserEntity = profileUserRepository.findById(profileId).get();
+        return profileUserEntity.getAllIdPhotoUser();
+    }
+
+    public long getIdUser(String userName) {
+        AppUser appUser = appUserRepository.findByUserName(userName).get();
+        return appUser.getId();
+    }
+
 }

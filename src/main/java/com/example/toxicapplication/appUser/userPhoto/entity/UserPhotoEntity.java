@@ -52,4 +52,5 @@ public class UserPhotoEntity {
             this.pathPhotoCircle = imagePath;
         }
     }
+
 }

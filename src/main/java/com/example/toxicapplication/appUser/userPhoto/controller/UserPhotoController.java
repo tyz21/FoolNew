@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -21,6 +22,11 @@ import java.io.IOException;
 public class UserPhotoController {
     private final UserPhotoService userPhotoService;
     private  final AppUserRepository appUserRepository;
+
+    @GetMapping("id/{userName}")
+    public long getIdUser(@PathVariable String userName){
+        return userPhotoService.getIdUser(userName);
+    }
 
     @PostMapping("/profile-image/{userId}")
     public ResponseEntity<String> uploadProfileImage(@PathVariable Long userId, @RequestParam("image") MultipartFile file) throws IOException {
@@ -46,8 +52,10 @@ public class UserPhotoController {
         headers.setContentLength(imageBytes.length);
         return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
     }
-//    @PostMapping("/rating/{profileId}")
-//    public double getRating(@PathVariable Long profileId, @RequestParam("rating") double rating){
-//        return userPhotoService.postRating(profileId, rating);
-//    }
+
+    @GetMapping("/allImages/{profileId}")
+    public List<Long> getAllIdImage(@PathVariable Long profileId){
+        return userPhotoService.getAllIdImage(profileId);
+    }
+
 }

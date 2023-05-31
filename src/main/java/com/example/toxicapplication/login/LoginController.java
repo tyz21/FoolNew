@@ -40,7 +40,7 @@ public class LoginController {
             return "Login successful!";
 
         } catch (AuthenticationException e) {
-            return "check email or password";
+            return "check username or password";
         }
     }
 }

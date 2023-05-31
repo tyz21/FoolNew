@@ -12,7 +12,10 @@ import java.util.List;
 @RequestMapping("/profile")
 public class ProfileUserController {
     private final ProfileUserService profileUserService;
-
+    @GetMapping("/rating/{profileId}")
+    public double getRating(@PathVariable Long profileId){
+        return profileUserService.getRating(profileId);
+    }
     @GetMapping("/allIds/{profileId}")
     public List<Long> getAllPhotoIDs(@PathVariable Long profileId) {
         return profileUserService.getAllPhotoIDs(profileId);
