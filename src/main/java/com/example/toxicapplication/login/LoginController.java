@@ -24,19 +24,22 @@ public class LoginController {
     public String login(@RequestParam String userName, @RequestParam String password) {
         try {
             UserDetails userDetails = appUserService.loadUserByUsername(userName);
-     //ToDO loadUserByUsername by UserName
 
             if (!userDetails.isEnabled()) {
                 return "confirm your email";
             }
+
             Authentication authentication = new UsernamePasswordAuthenticationToken(
                     userName,
                     password
             );
 
             Authentication authenticated = authenticationManager.authenticate(authentication);
-            SecurityContextHolder.getContext().setAuthentication(authenticated);
+            if (!authenticated.isAuthenticated()) {
+                return "user not authenticated";
+            }
 
+            SecurityContextHolder.getContext().setAuthentication(authenticated);
             return "Login successful!";
 
         } catch (AuthenticationException e) {

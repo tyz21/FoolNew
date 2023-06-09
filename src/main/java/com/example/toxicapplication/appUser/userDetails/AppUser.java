@@ -51,6 +51,9 @@ public class AppUser implements UserDetails {
         this.email = email;
         this.password = password;
         this.appUserRole = appUserRole;
+
+        this.profileUserEntity = new ProfileUserEntity(this);
+        this.profileUserEntity.setId(this.id);
     }
 
     @Override

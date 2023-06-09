@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Entity
 @NoArgsConstructor
 @Data
-public class ProfileUserEntity implements Serializable {
+public class ProfileUserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,13 +24,14 @@ public class ProfileUserEntity implements Serializable {
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private UserPhotoEntity userPhotoEntity;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    private UserPhotoEntity userPhotoEntity;
     @Column
     private long lastIdAddPhoto;
     @Column
     private double ratingUser;
     @Column
+    @OrderBy("topUser ASC") // Сортировка по возрастанию
     private long topUser;
     @Column
     private String subscriberId;
@@ -52,7 +53,7 @@ public class ProfileUserEntity implements Serializable {
         if (allIdPhotoUser.isEmpty()) {
             return new ArrayList<>();
         }
-        return Arrays.stream(allIdPhotoUser.split(""))
+        return Arrays.stream(allIdPhotoUser.split(","))
                 .map(Long::parseLong)
                 .collect(Collectors.toList());
     }
@@ -60,6 +61,20 @@ public class ProfileUserEntity implements Serializable {
     public void setAllIdPhotoUser(List<Long> photoIds) {
         this.allIdPhotoUser = photoIds.stream()
                 .map(String::valueOf)
-                .collect(Collectors.joining(""));
+                .collect(Collectors.joining(","));
+    }
+
+    @Override
+    public String toString() {
+        return "ProfileUserEntity{" +
+                "id=" + id +
+                ", appUser=" + appUser +
+                ", lastIdAddPhoto=" + lastIdAddPhoto +
+                ", ratingUser=" + ratingUser +
+                ", topUser=" + topUser +
+                ", subscriberId='" + subscriberId + '\'' +
+                ", subscriptionId='" + subscriptionId + '\'' +
+                ", allIdPhotoUser='" + allIdPhotoUser + '\'' +
+                '}';
     }
 }

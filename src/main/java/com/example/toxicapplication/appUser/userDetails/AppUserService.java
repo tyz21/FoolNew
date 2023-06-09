@@ -9,8 +9,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -19,11 +21,16 @@ public class AppUserService implements UserDetailsService {
 
     private final static String USER_NOT_FOUND_MSG =
             "user with email %s not found";
-    private final static Integer emailSenMinuts = 15;
+    private final static Integer emailSendMinut = 15;
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
 
+    @Transactional(readOnly = true)
+    public long getIdUser(String userName) {
+        AppUser appUser = appUserRepository.findByUserName(userName).get();
+        return appUser.getId();
+    }
     @Override
     public UserDetails loadUserByUsername(String userName)
             throws UsernameNotFoundException {
@@ -57,7 +64,7 @@ public class AppUserService implements UserDetailsService {
         ConfirmationTokenEntity confirmationTokenEntity = new ConfirmationTokenEntity(
                 token,
                 LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(emailSenMinuts),
+                LocalDateTime.now().plusMinutes(emailSendMinut),
                 appUser
         );
 
@@ -68,8 +75,8 @@ public class AppUserService implements UserDetailsService {
 
         return token;
     }
-
-    public int enableAppUser(String email) {
-        return appUserRepository.enableAppUser(email);
+    public void enableAppUser(String email) {
+        appUserRepository.enableAppUser(email);
     }
+
 }

@@ -48,7 +48,8 @@ public class UserPhotoEntity {
         this.appUser = appUser;
         if (imagePath.contains("/rectangle")) {
             this.pathPhotoRectangle = imagePath;
-        } else {
+        }
+        if (imagePath.contains("/circle")) {
             this.pathPhotoCircle = imagePath;
         }
     }

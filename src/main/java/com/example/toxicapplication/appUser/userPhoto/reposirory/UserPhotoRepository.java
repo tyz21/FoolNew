@@ -8,5 +8,5 @@ public interface UserPhotoRepository extends JpaRepository<UserPhotoEntity, Long
 //    @Query("SELECT p.id FROM UserPhotoEntity p WHERE p.id = :userId")
 //    List<Long> findImageIdsByUserId(@Param("userId") Long userId);
 
-   // UserPhotoEntity findUserPhotoEntityById(Long id);
+    UserPhotoEntity findUserPhotoEntityById(long id);
 }
