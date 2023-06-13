@@ -20,6 +20,9 @@ public class UserPhotoEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "profile_user_id")
+    private ProfileUserEntity profileUserEntity;
 
     @Column
     private String pathPhotoRectangle;
@@ -41,9 +44,10 @@ public class UserPhotoEntity {
                 profileUser = new ProfileUserEntity(appUser);
                 appUser.setProfileUserEntity(profileUser);
             }
-            profileUser.getAllIdPhotoUser().add(id);
+              profileUser.setUserPhotoEntity(this);
         }
     }
+
     public UserPhotoEntity(AppUser appUser, String imagePath) {
         this.appUser = appUser;
         if (imagePath.contains("/rectangle")) {

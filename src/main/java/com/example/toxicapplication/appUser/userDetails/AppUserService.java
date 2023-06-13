@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -51,7 +50,7 @@ public class AppUserService implements UserDetailsService {
 
             throw new IllegalStateException("email already taken");
         }
-//appUserRepository.findByEmail("enail").ifPresentOrElse(AppUser::getEmail);
+//appUserRepository.findByEmail("email").ifPresentOrElse(AppUser::getEmail);
         String encodedPassword = bCryptPasswordEncoder
                 .encode(appUser.getPassword());
 

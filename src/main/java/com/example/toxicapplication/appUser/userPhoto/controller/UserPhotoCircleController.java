@@ -1,7 +1,6 @@
 package com.example.toxicapplication.appUser.userPhoto.controller;
 
 import com.example.toxicapplication.appUser.userDetails.AppUser;
-import com.example.toxicapplication.appUser.userDetails.AppUserRepository;
 import com.example.toxicapplication.appUser.userPhoto.service.UserPhotoCircleService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,19 +18,19 @@ import static com.example.toxicapplication.utility.UserUtility.getHttpHeaders;
 @RestController
 @Slf4j
 @AllArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("/image")
 public class UserPhotoCircleController {
     private final UserPhotoCircleService userPhotoCircleService;
 
-    @PostMapping("/download/profile-image-circle")
+    @PostMapping("/circle")
     public ResponseEntity<String> uploadProfileImage(@AuthenticationPrincipal AppUser appUser, @RequestParam("image") MultipartFile file) throws IOException {
         byte[] imageBytes = file.getBytes();
         String imagePath = userPhotoCircleService.saveImageCircle(appUser, imageBytes, file.getOriginalFilename());
         return new ResponseEntity<>("Image uploaded successfully! Image path: " + imagePath, HttpStatus.OK);
     }
-    @GetMapping("get/profile-image-circle/{id}")
-    public ResponseEntity<byte[]> getProfileCircleImageById(@PathVariable Long id) throws IOException {
-        byte[] imageBytes = userPhotoCircleService.getProfileImageCircleById(id);
+    @GetMapping("circle/{idPhoto}")
+    public ResponseEntity<byte[]> getProfileCircleImageById(@PathVariable Long idPhoto) throws IOException {
+        byte[] imageBytes = userPhotoCircleService.getProfileImageCircleById(idPhoto);
         if (imageBytes == null) {
             return ResponseEntity.notFound().build();
         }

@@ -10,15 +10,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @Slf4j
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class ProfileUserService {
     private final ProfileUserRepository profileUserRepository;
     private final UserPhotoRepository userPhotoRepository;
@@ -28,29 +29,21 @@ public class ProfileUserService {
         ProfileUserEntity profileUser = profileUserRepository.findByAppUser_Id(id);
         return profileUser.getId();
     }
+
     public long getTop(Long profileId) {
         UserPhotoEntity userPhotoEntity = userPhotoRepository.findById(profileId).get();
         return userPhotoEntity.getTopPhoto();
     }
 
-    public double getRatingPhoto(Long profileId) {
-        UserPhotoEntity userPhotoEntity = userPhotoRepository.findById(profileId).get();
-        return userPhotoEntity.getRatingPhoto();
-    }
-
-    public List<Long> getAllPhotoIDs(Long profileId) {
-        ProfileUserEntity profileUserEntity = profileUserRepository.findAllById(profileId);
-        return profileUserEntity.getAllIdPhotoUser();
-    }
     public String getUserName(Long profileId) {
         ProfileUserEntity profileUser = profileUserRepository.findById(profileId).get();
         AppUser appUser = appUserRepository.findById(profileUser.getId()).get();
         return appUser.getUsername();
     }
 
-    public String getAllUser() {
+    public String getAllTopUser() {
         StringBuilder users = new StringBuilder();
-        Pageable pageable = PageRequest.of(0, 4, Sort.by(Sort.Direction.ASC, "topUser"));
+        Pageable pageable = PageRequest.of(0, 50, Sort.by(Sort.Direction.ASC, "topUser"));
         Page<ProfileUserEntity> page = profileUserRepository.findAll(pageable);
         List<ProfileUserEntity> profileUser = page.getContent();
 
@@ -64,5 +57,10 @@ public class ProfileUserService {
         }
 
         return users.toString();
+    }
+
+    public long getIdProfileUser(Long idUser) {
+        ProfileUserEntity profileUser = profileUserRepository.findByAppUser_Id(idUser);
+        return profileUser.getId();
     }
 }

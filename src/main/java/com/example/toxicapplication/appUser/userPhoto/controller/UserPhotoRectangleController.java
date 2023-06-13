@@ -18,20 +18,20 @@ import static com.example.toxicapplication.utility.UserUtility.getHttpHeaders;
 @RestController
 @Slf4j
 @AllArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("/image")
 public class UserPhotoRectangleController {
     private final UserPhotoRectangleService userPhotoRectangleService;
 
-    @PostMapping("/download/profile-image-rectangle")
+    @PostMapping("/rectangle")
     public ResponseEntity<String> uploadProfileImage(@AuthenticationPrincipal AppUser appUser, @RequestParam("image") MultipartFile file) throws IOException {
         byte[] imageBytes = file.getBytes();
         String imagePath = userPhotoRectangleService.saveImageRectangle(appUser, imageBytes, file.getOriginalFilename());
         return new ResponseEntity<>("Image uploaded successfully! Image path: " + imagePath, HttpStatus.OK);
     }
 
-    @GetMapping("get/profile-image-rectangle/{id}")
-    public ResponseEntity<byte[]> getProfileImageById(@PathVariable Long id) throws IOException {
-        byte[] imageBytes = userPhotoRectangleService.getProfileImageRectangleById(id);
+    @GetMapping("rectangle/{idPhoto}")
+    public ResponseEntity<byte[]> getProfileImageById(@PathVariable Long idPhoto) throws IOException {
+        byte[] imageBytes = userPhotoRectangleService.getProfileImageRectangleById(idPhoto);
         if (imageBytes == null) {
             return ResponseEntity.notFound().build();
         }

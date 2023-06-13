@@ -4,7 +4,6 @@ import com.example.toxicapplication.appUser.userDetails.AppUser;
 import com.example.toxicapplication.appUser.userDetails.AppUserRepository;
 import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
 import com.example.toxicapplication.appUser.userPhoto.reposirory.UserPhotoRepository;
-import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,10 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Optional;
 
-import static com.example.toxicapplication.utility.UserUtility.folderCreate;
+import static com.example.toxicapplication.utility.UserUtility.pathPhoto;
+import static com.example.toxicapplication.utility.UserUtility.saveImageForProfile;
 
 @Service
 @Slf4j
@@ -29,38 +27,26 @@ public class UserPhotoRectangleService {
     public String saveImageRectangle(AppUser appUser, byte[] imageBytes, String imageName) throws IOException {
         String userFolder = "images/" + appUser.getId() + "/";
         String rectangleFolder = userFolder + "rectangle/";
-        String imagePath = rectangleFolder + imageName;
-
-        folderCreate(imageBytes, rectangleFolder, imagePath);
+        String imagePath = pathPhoto(imageBytes, imageName, rectangleFolder);
 
         appUser = appUserRepository.findById(appUser.getId()).orElse(appUser);
 
         UserPhotoEntity userPhotoEntity = new UserPhotoEntity(appUser, imagePath);
+        userPhotoEntity.setProfileUserEntity(appUser.getProfileUserEntity());
 
         userPhotoRepository.save(userPhotoEntity);
 
-        ProfileUserEntity profileUserEntity = appUser.getProfileUserEntity();
-        if (profileUserEntity == null) {
-            profileUserEntity = new ProfileUserEntity(appUser);
-            appUser.setProfileUserEntity(profileUserEntity);
-        }
-        List<Long> photoIds = profileUserEntity.getAllIdPhotoUser();
-        photoIds.add(userPhotoEntity.getId());
-        profileUserEntity.setAllIdPhotoUser(photoIds);
+        saveImageForProfile(appUser, userPhotoEntity);
 
-        profileUserEntity.setLastIdAddPhoto(userPhotoEntity.getId());
         return imagePath;
     }
 
+
     @Transactional(readOnly = true)
     public byte[] getProfileImageRectangleById(long id) throws IOException {
-        Optional<UserPhotoEntity> optionalImage = userPhotoRepository.findById(id);
-        if (optionalImage.isEmpty()) {
-            return null;
-        }
+        UserPhotoEntity image = userPhotoRepository.findById(id).get();
 
-        UserPhotoEntity profileImage = optionalImage.get();
-        String imagePath = profileImage.getPathPhotoRectangle();
+        String imagePath = image.getPathPhotoRectangle();
 
         return Files.readAllBytes(Paths.get(imagePath));
     }

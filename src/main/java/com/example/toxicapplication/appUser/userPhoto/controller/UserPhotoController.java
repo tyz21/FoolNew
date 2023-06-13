@@ -11,18 +11,20 @@ import java.util.List;
 @RestController
 @Slf4j
 @AllArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("/images")
 public class UserPhotoController {
     private final UserPhotoService userPhotoService;
 
-    @GetMapping("id/profile/{idProfile}")
-    public long getIdProfileUser(@PathVariable Long idProfile) {
-        return userPhotoService.getIdProfileUser(idProfile);
+    @GetMapping("/circle/{profileId}")
+    public List<Long> getAllIdImageCircle(@PathVariable long profileId) throws NoPhotoForProfileException {
+        return userPhotoService.getAllIdCircleImage(profileId);
     }
-
-    @GetMapping("/allImages/{profileId}")
-    public List<Long> getAllIdImage(@PathVariable long profileId) throws NoPhotoForProfileException {
-        return userPhotoService.getAllIdImage(profileId);
+    @GetMapping("/rectangle/{profileId}")
+    public List<Long> getAllIdImageRectangle(@PathVariable long profileId) throws NoPhotoForProfileException {
+        return userPhotoService.getAllIdRectangleImage(profileId);
     }
-
+    @GetMapping("/randomId")
+    public long getRandomId() throws NoPhotoForProfileException {
+        return userPhotoService.provideRandomIdPhotoUser();
+    }
 }
