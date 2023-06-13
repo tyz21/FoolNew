@@ -48,13 +48,13 @@ public class UserUtility {
             appUser.setProfileUserEntity(profileUserEntity);
         }
         profileUserEntity.setUserPhotoEntity(userPhotoEntity);
-
         List<Long> photoIds = profileUserEntity.getAllIdRectanglePhotoUser();
-        photoIds.add(userPhotoEntity.getId());
-//        if (userPhotoEntity.getPathPhotoCircle() == null) {
-//            profileUserEntity.setAllIdRectanglePhotoUser(photoIds);
-//        } else {
-//            profileUserEntity.setAllIdCirclePhotoUser(photoIds);
-//        } // refactor now
+        if (userPhotoEntity.getPathPhotoCircle() == null) {
+            photoIds.add(userPhotoEntity.getId());
+            profileUserEntity.setAllIdRectanglePhotoUser(photoIds);
+        } else {
+            photoIds.add(userPhotoEntity.getId());
+            profileUserEntity.setAllIdCirclePhotoUser(photoIds);
+        }
     }
 }
