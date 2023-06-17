@@ -1,7 +1,7 @@
 package com.example.toxicapplication.appUser.userProfile;
 
-import com.example.toxicapplication.appUser.userDetails.AppUser;
-import com.example.toxicapplication.appUser.userDetails.AppUserRepository;
+import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
+import com.example.toxicapplication.appUser.userDetails.repository.AppUserRepository;
 import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
 import com.example.toxicapplication.appUser.userPhoto.reposirory.UserPhotoRepository;
 import lombok.AllArgsConstructor;

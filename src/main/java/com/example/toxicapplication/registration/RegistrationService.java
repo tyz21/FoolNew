@@ -1,9 +1,9 @@
 package com.example.toxicapplication.registration;
 
-import com.example.toxicapplication.appUser.userDetails.AppUser;
-import com.example.toxicapplication.appUser.userDetails.AppUserRepository;
-import com.example.toxicapplication.appUser.userDetails.AppUserRole;
-import com.example.toxicapplication.appUser.userDetails.AppUserService;
+import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
+import com.example.toxicapplication.appUser.userDetails.repository.AppUserRepository;
+import com.example.toxicapplication.appUser.userDetails.entity.AppUserRoleEnum;
+import com.example.toxicapplication.appUser.userDetails.service.AppUserService;
 import com.example.toxicapplication.email.EmailSender;
 import com.example.toxicapplication.registration.token.ConfirmationTokenEntity;
 import com.example.toxicapplication.registration.token.ConfirmationTokenService;
@@ -40,7 +40,7 @@ public class RegistrationService {
                         request.getUserName(),
                         request.getEmail(),
                         request.getPassword(),
-                        AppUserRole.USER
+                        AppUserRoleEnum.USER
                 )
         );
 //        String newAccessToken = generateAccessToken(request.getUserName());
@@ -48,7 +48,7 @@ public class RegistrationService {
 //        // Update the user's account with the new access token
 //        appUserService.updateAccessToken(request.getUserName(), newAccessToken);
 
-        String link = "https://5142-37-214-57-28.eu.ngrok.io/api/v1/registration/confirm?token=" + token;
+        String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
         emailSender.send(
                 request.getEmail(),
                 buildEmail(request.getUserName(), link));

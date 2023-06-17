@@ -1,6 +1,6 @@
 package com.example.toxicapplication.registration.token;
 
-import com.example.toxicapplication.appUser.userDetails.AppUser;
+import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

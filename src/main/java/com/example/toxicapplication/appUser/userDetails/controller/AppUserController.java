@@ -1,5 +1,6 @@
-package com.example.toxicapplication.appUser.userDetails;
+package com.example.toxicapplication.appUser.userDetails.controller;
 
+import com.example.toxicapplication.appUser.userDetails.service.AppUserAdditionalService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,10 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RequestMapping("/users")
 public class AppUserController {
-    private final AppUserService appUserService;
+    private final AppUserAdditionalService appUserAdditionalService;
     @GetMapping("id/{userName}")
     public long getIdUser(@PathVariable String userName) {
-        return appUserService.getIdUser(userName);
+        return appUserAdditionalService.getIdUser(userName);
+    }
+    @GetMapping("search/{requestSearch}")
+    public String requestSearch(@PathVariable String requestSearch) {
+        return appUserAdditionalService.searchUser(requestSearch);
     }
 
 }

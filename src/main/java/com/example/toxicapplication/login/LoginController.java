@@ -1,6 +1,6 @@
 package com.example.toxicapplication.login;
 
-import com.example.toxicapplication.appUser.userDetails.AppUserService;
+import com.example.toxicapplication.appUser.userDetails.service.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

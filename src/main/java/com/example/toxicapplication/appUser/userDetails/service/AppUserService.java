@@ -1,5 +1,7 @@
-package com.example.toxicapplication.appUser.userDetails;
+package com.example.toxicapplication.appUser.userDetails.service;
 
+import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
+import com.example.toxicapplication.appUser.userDetails.repository.AppUserRepository;
 import com.example.toxicapplication.registration.token.ConfirmationTokenEntity;
 import com.example.toxicapplication.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
@@ -9,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -24,12 +25,6 @@ public class AppUserService implements UserDetailsService {
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
-
-    @Transactional(readOnly = true)
-    public long getIdUser(String userName) {
-        AppUser appUser = appUserRepository.findByUserName(userName).get();
-        return appUser.getId();
-    }
     @Override
     public UserDetails loadUserByUsername(String userName)
             throws UsernameNotFoundException {

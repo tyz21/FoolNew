@@ -1,4 +1,4 @@
-package com.example.toxicapplication.appUser.userDetails;
+package com.example.toxicapplication.appUser.userDetails.entity;
 
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 import com.sun.istack.NotNull;
@@ -38,7 +38,7 @@ public class AppUser implements UserDetails {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private AppUserRole appUserRole;
+    private AppUserRoleEnum appUserRoleEnum;
 
     private Boolean locked = false;
     private Boolean enabled = false;
@@ -46,11 +46,11 @@ public class AppUser implements UserDetails {
     @OneToOne(mappedBy = "appUser", cascade = CascadeType.ALL)
     private ProfileUserEntity profileUserEntity;
 
-    public AppUser(String userName, String email, String password, AppUserRole appUserRole) {
+    public AppUser(String userName, String email, String password, AppUserRoleEnum appUserRoleEnum) {
         this.userName = userName;
         this.email = email;
         this.password = password;
-        this.appUserRole = appUserRole;
+        this.appUserRoleEnum = appUserRoleEnum;
 
         this.profileUserEntity = new ProfileUserEntity(this);
         this.profileUserEntity.setId(this.id);
@@ -59,7 +59,7 @@ public class AppUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority =
-                new SimpleGrantedAuthority(appUserRole.name());
+                new SimpleGrantedAuthority(appUserRoleEnum.name());
         return Collections.singletonList(authority);
     }
 

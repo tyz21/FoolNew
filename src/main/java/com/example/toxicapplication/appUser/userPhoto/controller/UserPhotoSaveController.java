@@ -1,6 +1,6 @@
 package com.example.toxicapplication.appUser.userPhoto.controller;
 
-import com.example.toxicapplication.appUser.userDetails.AppUser;
+import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
 import com.example.toxicapplication.appUser.userPhoto.service.UserPhotoSaveService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
