@@ -31,10 +31,15 @@ public class UserPhotoEntity {
     private String pathPhotoCircle;
 
     @Column
+    private Integer countMark;
+
+    @Column
+    private Double sumMark;
+    @Column
     private double ratingPhoto;
 
     @Column
-    private Long topPhoto;
+    private long topPhoto;
 
     @PrePersist
     private void updateProfileUserEntity() {
@@ -44,18 +49,20 @@ public class UserPhotoEntity {
                 profileUser = new ProfileUserEntity(appUser);
                 appUser.setProfileUserEntity(profileUser);
             }
-              profileUser.setUserPhotoEntity(this);
+            profileUser.setUserPhotoEntity(this);
         }
     }
 
-    public UserPhotoEntity(AppUser appUser, String imagePath) {
+    //    public UserPhotoEntity(AppUser appUser, String imagePath) {
+//        this.appUser = appUser;
+//        if (imagePath.contains("/rectangle")) {
+//            this.pathPhotoRectangle = imagePath;
+//        }
+//        if (imagePath.contains("/circle")) {
+//            this.pathPhotoCircle = imagePath;
+//        }
+//    }
+    public UserPhotoEntity(AppUser appUser) {
         this.appUser = appUser;
-        if (imagePath.contains("/rectangle")) {
-            this.pathPhotoRectangle = imagePath;
-        }
-        if (imagePath.contains("/circle")) {
-            this.pathPhotoCircle = imagePath;
-        }
     }
-
 }

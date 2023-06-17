@@ -15,18 +15,6 @@ import java.util.List;
 
 @Slf4j
 public class UserUtility {
-    public static String pathPhoto(byte[] imageBytes, String imageName, String folderName) throws IOException {
-        String imagePath = folderName + imageName;
-
-        File folder = new File(folderName);
-        if (!folder.exists()) {
-            folder.mkdirs();
-            //   Files.createDirectories(Paths.get("images", appUser.getId().toString()));
-        }
-
-        Files.write(Paths.get(imagePath), imageBytes);
-        return imagePath;
-    }
 
     public static HttpHeaders getHttpHeaders(byte[] imageBytes) {
         HttpHeaders headers = new HttpHeaders();
@@ -48,13 +36,14 @@ public class UserUtility {
             appUser.setProfileUserEntity(profileUserEntity);
         }
         profileUserEntity.setUserPhotoEntity(userPhotoEntity);
-        List<Long> photoIds = profileUserEntity.getAllIdRectanglePhotoUser();
+        List<Long> photoIdRectangle = profileUserEntity.getAllIdRectanglePhotoUser();
+        List<Long> photoIdCircle = profileUserEntity.getAllIdCirclePhotoUser();
         if (userPhotoEntity.getPathPhotoCircle() == null) {
-            photoIds.add(userPhotoEntity.getId());
-            profileUserEntity.setAllIdRectanglePhotoUser(photoIds);
+            photoIdRectangle.add(userPhotoEntity.getId());
+            profileUserEntity.setAllIdRectanglePhotoUser(photoIdRectangle);
         } else {
-            photoIds.add(userPhotoEntity.getId());
-            profileUserEntity.setAllIdCirclePhotoUser(photoIds);
+            photoIdCircle.add(userPhotoEntity.getId());
+            profileUserEntity.setAllIdCirclePhotoUser(photoIdCircle);
         }
     }
 }

@@ -4,7 +4,6 @@ import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
 import com.example.toxicapplication.appUser.userPhoto.reposirory.UserPhotoRepository;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserRepository;
-import com.example.toxicapplication.exception.NoPhotoForProfileException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,13 +22,18 @@ public class UserRatingService {
 
     @Transactional
     public double postRating(Long photoId, double rating) {
-
         UserPhotoEntity userPhotoEntity = userPhotoRepository.findById(photoId).get();
+        Integer countMark = userPhotoEntity.getCountMark();
+        Double sumMark = userPhotoEntity.getSumMark();
+        countMark = (countMark == null) ? 0 : countMark;
+        sumMark = (sumMark == null) ? 0 : sumMark;
+        userPhotoEntity.setCountMark(countMark + 1);
+        userPhotoEntity.setSumMark(sumMark + rating);
         double currentRating = userPhotoEntity.getRatingPhoto();
         if (currentRating == 0) {
             userPhotoEntity.setRatingPhoto(rating);
         } else {
-            double newRatingPhoto = (currentRating + rating) / 2.0;
+            double newRatingPhoto = (userPhotoEntity.getSumMark() / userPhotoEntity.getCountMark());
             userPhotoEntity.setRatingPhoto(newRatingPhoto);
         }
         userPhotoRepository.save(userPhotoEntity);
@@ -57,7 +61,6 @@ public class UserRatingService {
 
     }
 
-    @Transactional
     public void setTopUserForProfileAndPhoto(Long id) {
         ProfileUserEntity profileUser = profileUserRepository.findById(id).orElse(null);
         checkNull(profileUser);
@@ -82,7 +85,6 @@ public class UserRatingService {
 
             profileUserRepository.save(profile);
             userPhotoRepository.save(userPhoto);
-
         }
     }
 

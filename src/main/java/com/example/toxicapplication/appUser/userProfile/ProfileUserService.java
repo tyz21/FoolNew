@@ -25,13 +25,8 @@ public class ProfileUserService {
     private final UserPhotoRepository userPhotoRepository;
     private final AppUserRepository appUserRepository;
 
-    public long getProfileId(Long id){
-        ProfileUserEntity profileUser = profileUserRepository.findByAppUser_Id(id);
-        return profileUser.getId();
-    }
-
-    public long getTop(Long profileId) {
-        UserPhotoEntity userPhotoEntity = userPhotoRepository.findById(profileId).get();
+    public Long getTop(Long photoId) {
+        UserPhotoEntity userPhotoEntity = userPhotoRepository.findById(photoId).get();
         return userPhotoEntity.getTopPhoto();
     }
 
@@ -59,8 +54,9 @@ public class ProfileUserService {
         return users.toString();
     }
 
-    public long getIdProfileUser(Long idUser) {
-        ProfileUserEntity profileUser = profileUserRepository.findByAppUser_Id(idUser);
-        return profileUser.getId();
+    @Transactional
+    public Double getRatingProfile(Long profileId) {
+       ProfileUserEntity profileUser = profileUserRepository.findById(profileId).get();
+       return profileUser.getRatingUser();
     }
 }

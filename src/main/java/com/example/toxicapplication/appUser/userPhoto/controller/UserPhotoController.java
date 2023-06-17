@@ -16,15 +16,17 @@ public class UserPhotoController {
     private final UserPhotoService userPhotoService;
 
     @GetMapping("/circle/{profileId}")
-    public List<Long> getAllIdImageCircle(@PathVariable long profileId) throws NoPhotoForProfileException {
-        return userPhotoService.getAllIdCircleImage(profileId);
+    public Long getLastIdImageCircle(@PathVariable Long profileId) throws NoPhotoForProfileException {
+        return userPhotoService.getLastIdImageCircle(profileId);
     }
+
     @GetMapping("/rectangle/{profileId}")
-    public List<Long> getAllIdImageRectangle(@PathVariable long profileId) throws NoPhotoForProfileException {
+    public List<Long> getAllIdImageRectangle(@PathVariable Long profileId) throws NoPhotoForProfileException {
         return userPhotoService.getAllIdRectangleImage(profileId);
     }
+
     @GetMapping("/randomId")
-    public long getRandomId() throws NoPhotoForProfileException {
+    public long getRandomId(){
         return userPhotoService.provideRandomIdPhotoUser();
     }
 }
