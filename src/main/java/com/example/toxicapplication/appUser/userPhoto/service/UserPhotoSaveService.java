@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static com.example.toxicapplication.utility.UserUtility.saveImageForProfile;
 
@@ -27,19 +28,22 @@ public class UserPhotoSaveService {
     private final ProfileUserRepository profileUserRepository;
 
     @Transactional
-    public String saveImageRectangle(AppUser appUser, byte[] imageBytes, String imageName) throws IOException {
+    public String saveImage(AppUser appUser, byte[] imageBytes, String imageName) throws IOException {
         String imagePath = savePhoto(imageBytes, imageName);
         appUser = appUserRepository.findById(appUser.getId()).orElse(appUser);
         ProfileUserEntity profileUserEntity = profileUserRepository.findById(appUser.getId()).get();
         UserPhotoEntity userPhotoEntity = new UserPhotoEntity(appUser);
-        if (imagePath.contains("/rectangle")) {
+        if (imagePath.contains("rectangle")) {
             userPhotoEntity.setPathPhotoRectangle(imagePath);
         } else {
             userPhotoEntity.setPathPhotoCircle(imagePath);
         }
         userPhotoEntity.setProfileUserEntity(appUser.getProfileUserEntity());
         profileUserEntity.setRatingUser(0.0);
-        profileUserEntity.setTopUser(0);
+
+        List<ProfileUserEntity> allProfiles = profileUserRepository.findAll();
+        profileUserEntity.setTopUser(allProfiles.size() + 1);
+
         userPhotoRepository.save(userPhotoEntity);
 
         saveImageForProfile(appUser, userPhotoEntity);

@@ -6,10 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProfileUserRepository extends JpaRepository<ProfileUserEntity, Long> {
-
     @Query("SELECT MAX(u.id) FROM ProfileUserEntity u")
     Long getMaxId();
-
-    ProfileUserEntity findByAppUser_Id(Long userId);
 }
 

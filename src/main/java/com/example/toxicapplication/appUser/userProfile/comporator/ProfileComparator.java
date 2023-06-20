@@ -1,20 +1,20 @@
-package com.example.toxicapplication.appUser.userDetails.entity.comporator;
+package com.example.toxicapplication.appUser.userProfile.comporator;
 
-import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
+import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 
 import java.util.Comparator;
 
-public class UsernameComparator implements Comparator<AppUser> {
+public class ProfileComparator implements Comparator<ProfileUserEntity> {
     private final String searchQuery;
 
-    public UsernameComparator(String searchQuery) {
+    public ProfileComparator(String searchQuery) {
         this.searchQuery = searchQuery.toLowerCase();
     }
 
     @Override
-    public int compare(AppUser user1, AppUser user2) {
-        String username1 = user1.getUsername().toLowerCase();
-        String username2 = user2.getUsername().toLowerCase();
+    public int compare(ProfileUserEntity user1, ProfileUserEntity user2) {
+        String username1 = user1.getProfileName().toLowerCase();
+        String username2 = user2.getProfileName().toLowerCase();
 
         boolean containsQuery1 = username1.contains(searchQuery);
         boolean containsQuery2 = username2.contains(searchQuery);

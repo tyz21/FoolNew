@@ -19,14 +19,15 @@ import static com.example.toxicapplication.utility.UserUtility.checkNull;
 public class UserRatingService {
     private final UserPhotoRepository userPhotoRepository;
     private final ProfileUserRepository profileUserRepository;
-
     @Transactional
     public double postRating(Long photoId, double rating) {
         UserPhotoEntity userPhotoEntity = userPhotoRepository.findById(photoId).get();
+
         Integer countMark = userPhotoEntity.getCountMark();
         Double sumMark = userPhotoEntity.getSumMark();
         countMark = (countMark == null) ? 0 : countMark;
         sumMark = (sumMark == null) ? 0 : sumMark;
+
         userPhotoEntity.setCountMark(countMark + 1);
         userPhotoEntity.setSumMark(sumMark + rating);
         double currentRating = userPhotoEntity.getRatingPhoto();
@@ -75,8 +76,15 @@ public class UserRatingService {
     private void makeTopFromRating(List<ProfileUserEntity> allProfiles) {
         for (int i = 0; i < allProfiles.size(); i++) {
             ProfileUserEntity profile = allProfiles.get(i);
+
             profile.setTopUser(i + 1);
+
+            List<Long> allIdRectanglePhotoUser = profile.getAllIdRectanglePhotoUser();
+            if (allIdRectanglePhotoUser.isEmpty()) {
+                continue;
+            }
             Long lastIdAddPhoto = profile.getAllIdRectanglePhotoUser().get(profile.getAllIdRectanglePhotoUser().size() - 1);
+
             if (lastIdAddPhoto == 0) {
                 continue;
             }
@@ -88,9 +96,4 @@ public class UserRatingService {
         }
     }
 
-    @Transactional(readOnly = true)
-    public double getRatingPhoto(Long profileId) {
-        UserPhotoEntity userPhotoEntity = userPhotoRepository.findById(profileId).get();
-        return userPhotoEntity.getRatingPhoto();
-    }
 }

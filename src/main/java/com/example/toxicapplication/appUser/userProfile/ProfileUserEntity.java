@@ -2,6 +2,7 @@ package com.example.toxicapplication.appUser.userProfile;
 
 import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
 import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,17 +19,21 @@ public class ProfileUserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
 
+    @JsonManagedReference
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_photo_id") // замените на соответствующее имя колонки
+    @JoinColumn(name = "user_photo_id")
     private UserPhotoEntity userPhotoEntity;
+    @Column
+    private String profileName;
     @Column
     private double ratingUser;
     @Column
-    @OrderBy("topUser ASC")
+   // @OrderBy("topUser ASC")
     private long topUser;
     @Column
     private String subscriberId;
@@ -44,6 +49,11 @@ public class ProfileUserEntity {
         this.allIdCirclePhotoUser = "";
         this.allIdRectanglePhotoUser = "";
     }
+
+//    public void setProfileName(AppUser appUser) {
+//        this.profileName = appUser.getUsername();
+//    }
+
     public void setRatingUser(double ratingUser) {
         this.ratingUser = ratingUser;
     }

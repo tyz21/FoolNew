@@ -38,7 +38,7 @@ public class AppUser implements UserDetails {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private AppUserRoleEnum appUserRoleEnum;
+    private AppUserRole appUserRole;
 
     private Boolean locked = false;
     private Boolean enabled = false;
@@ -46,11 +46,11 @@ public class AppUser implements UserDetails {
     @OneToOne(mappedBy = "appUser", cascade = CascadeType.ALL)
     private ProfileUserEntity profileUserEntity;
 
-    public AppUser(String userName, String email, String password, AppUserRoleEnum appUserRoleEnum) {
+    public AppUser(String userName, String email, String password, AppUserRole appUserRole) {
         this.userName = userName;
         this.email = email;
         this.password = password;
-        this.appUserRoleEnum = appUserRoleEnum;
+        this.appUserRole = appUserRole;
 
         this.profileUserEntity = new ProfileUserEntity(this);
         this.profileUserEntity.setId(this.id);
@@ -59,7 +59,7 @@ public class AppUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority =
-                new SimpleGrantedAuthority(appUserRoleEnum.name());
+                new SimpleGrantedAuthority(appUserRole.name());
         return Collections.singletonList(authority);
     }
 

@@ -2,6 +2,8 @@ package com.example.toxicapplication.appUser.userPhoto.entity;
 
 import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,12 +19,14 @@ public class UserPhotoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "profile_user_id")
-    private ProfileUserEntity profileUserEntity;
+   @JsonManagedReference
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "profile_user_id")
+   private ProfileUserEntity profileUserEntity;
 
     @Column
     private String pathPhotoRectangle;
@@ -48,20 +52,12 @@ public class UserPhotoEntity {
             if (profileUser == null) {
                 profileUser = new ProfileUserEntity(appUser);
                 appUser.setProfileUserEntity(profileUser);
+
+             //   profileUser.setProfileName(appUser.getUsername());
             }
             profileUser.setUserPhotoEntity(this);
         }
     }
-
-    //    public UserPhotoEntity(AppUser appUser, String imagePath) {
-//        this.appUser = appUser;
-//        if (imagePath.contains("/rectangle")) {
-//            this.pathPhotoRectangle = imagePath;
-//        }
-//        if (imagePath.contains("/circle")) {
-//            this.pathPhotoCircle = imagePath;
-//        }
-//    }
     public UserPhotoEntity(AppUser appUser) {
         this.appUser = appUser;
     }

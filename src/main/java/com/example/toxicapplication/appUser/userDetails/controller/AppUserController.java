@@ -16,9 +16,4 @@ public class AppUserController {
     public long getIdUser(@PathVariable String userName) {
         return appUserAdditionalService.getIdUser(userName);
     }
-    @GetMapping("search/{requestSearch}")
-    public String requestSearch(@PathVariable String requestSearch) {
-        return appUserAdditionalService.searchUser(requestSearch);
-    }
-
 }

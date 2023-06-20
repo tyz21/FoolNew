@@ -17,8 +17,4 @@ public class UserRatingController {
         return userRatingService.postRating(photoId, rating);
     }
 
-    @GetMapping("/{photoId}")
-    public double getRating(@PathVariable Long photoId) {
-        return userRatingService.getRatingPhoto(photoId);
-    }
 }

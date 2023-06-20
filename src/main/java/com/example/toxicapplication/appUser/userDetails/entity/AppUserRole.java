@@ -1,6 +1,6 @@
 package com.example.toxicapplication.appUser.userDetails.entity;
 
-public enum AppUserRoleEnum {
+public enum AppUserRole {
     USER,
     ADMIN
 }

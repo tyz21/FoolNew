@@ -2,6 +2,8 @@ package com.example.toxicapplication.appUser.userDetails.service;
 
 import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
 import com.example.toxicapplication.appUser.userDetails.repository.AppUserRepository;
+import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
+import com.example.toxicapplication.appUser.userProfile.ProfileUserRepository;
 import com.example.toxicapplication.registration.token.ConfirmationTokenEntity;
 import com.example.toxicapplication.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
@@ -23,8 +25,10 @@ public class AppUserService implements UserDetailsService {
             "user with email %s not found";
     private final static Integer emailSendMinut = 15;
     private final AppUserRepository appUserRepository;
+    private final ProfileUserRepository profileUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
+
     @Override
     public UserDetails loadUserByUsername(String userName)
             throws UsernameNotFoundException {
@@ -53,6 +57,10 @@ public class AppUserService implements UserDetailsService {
 
         appUserRepository.save(appUser);
 
+        ProfileUserEntity profileUser = profileUserRepository.findById(appUser.getId()).get();
+        profileUser.setProfileName(appUser.getUsername());
+        profileUserRepository.save(profileUser);
+
         String token = UUID.randomUUID().toString();
 
         ConfirmationTokenEntity confirmationTokenEntity = new ConfirmationTokenEntity(
@@ -69,6 +77,7 @@ public class AppUserService implements UserDetailsService {
 
         return token;
     }
+
     public void enableAppUser(String email) {
         appUserRepository.enableAppUser(email);
     }
