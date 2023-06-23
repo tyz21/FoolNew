@@ -1,9 +1,5 @@
 package com.example.toxicapplication.appUser.userProfile;
 
-import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
-import com.example.toxicapplication.appUser.userDetails.repository.AppUserRepository;
-import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
-import com.example.toxicapplication.appUser.userPhoto.reposirory.UserPhotoRepository;
 import com.example.toxicapplication.appUser.userProfile.comporator.ProfileComparator;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,8 +40,8 @@ public class ProfileUserService {
         return matchingUsers;
     }
 
-    public String getAllTopUser() {
-        StringBuilder users = new StringBuilder();
+    public List<ProfileUserEntity> getAllTopUsers() {
+        List<ProfileUserEntity> users = new ArrayList<>();
         int page = 0;
         int pageSize = 50;
         Sort sort = Sort.by(Sort.Direction.ASC, "topUser");
@@ -55,14 +51,7 @@ public class ProfileUserService {
             Page<ProfileUserEntity> resultPage = profileUserRepository.findAll(pageable);
             List<ProfileUserEntity> profileUsers = resultPage.getContent();
 
-            for (int i = 0; i < profileUsers.size(); i++) {
-                ProfileUserEntity user = profileUsers.get(i);
-                users.append(user.getId());
-
-                if (i < profileUsers.size() - 1) {
-                    users.append(", ");
-                }
-            }
+            users.addAll(profileUsers);
 
             if (!resultPage.hasNext()) {
                 break;
@@ -70,7 +59,7 @@ public class ProfileUserService {
             page++;
         }
 
-        return users.toString();
+        return users;
     }
 
     public ProfileUserEntity getProfile(Long profileId) {

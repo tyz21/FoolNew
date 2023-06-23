@@ -59,6 +59,11 @@ public class AppUserService implements UserDetailsService {
 
         ProfileUserEntity profileUser = profileUserRepository.findById(appUser.getId()).get();
         profileUser.setProfileName(appUser.getUsername());
+
+        profileUser.setRatingUser(0.0);
+        Long maxId = profileUserRepository.getMaxId();
+        profileUser.setTopUser(maxId); // check
+
         profileUserRepository.save(profileUser);
 
         String token = UUID.randomUUID().toString();

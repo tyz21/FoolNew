@@ -1,5 +1,7 @@
 package com.example.toxicapplication.appUser.userPhoto.service;
 
+import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
+import com.example.toxicapplication.appUser.userPhoto.reposirory.UserPhotoRepositoryDemo;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserRepository;
 import com.example.toxicapplication.exception.NoPhotoForProfileException;
@@ -16,26 +18,35 @@ import java.util.List;
 @AllArgsConstructor
 public class UserPhotoService {
     private final ProfileUserRepository profileUserRepository;
+    private final UserPhotoRepositoryDemo userPhotoRepository;
 
-    @Transactional
     public List<ProfileUserEntity> provideRandomUsers() throws NoPhotoForProfileException {
         List<ProfileUserEntity> randomUsers = new ArrayList<>();
+        ProfileUserEntity randomUser;
         long maxId = profileUserRepository.getMaxId();
-
         while (randomUsers.size() < 20) {
             long randomId = (long) (Math.random() * maxId) + 1L;
-            ProfileUserEntity randomUser = profileUserRepository.findById(randomId).get();
+            randomUser = profileUserRepository.findById(randomId).get();
 
-            if (randomUser.getUserPhotoEntity() != null && !randomUser.getAllIdRectanglePhotoUser().isEmpty()) {
+            if (randomUser != null) {
                 randomUsers.add(randomUser);
             }
         }
 
-        if (randomUsers.isEmpty()) {
-            throw new NoPhotoForProfileException("No photo for any profile");
-        }
-
         return randomUsers;
+    }
+
+    @Transactional
+    public List<UserPhotoEntityDemo> getALlPhotoData(Long id) {
+        ProfileUserEntity profileUser = profileUserRepository.findById(id).get();
+        List<UserPhotoEntityDemo> allPhoto = userPhotoRepository.findAll();
+        List<UserPhotoEntityDemo> allPhotoProfile = new ArrayList<>();
+        for (UserPhotoEntityDemo userPhoto : allPhoto) {
+            if (userPhoto.getAppUser() == profileUser.getAppUser()) {
+                allPhotoProfile.add(userPhoto);
+            }
+        }
+        return allPhotoProfile;
     }
 }
 

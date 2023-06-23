@@ -19,8 +19,8 @@ public class ProfileUserController {
     }
 
     @GetMapping("/top-user")
-    public String getAllUser() {
-        return profileUserService.getAllTopUser();
+    public List<ProfileUserEntity> getAllUser() {
+        return profileUserService.getAllTopUsers();
     }
 
     @GetMapping("get/{idProfile}")

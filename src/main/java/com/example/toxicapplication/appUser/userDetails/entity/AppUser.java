@@ -1,6 +1,7 @@
 package com.example.toxicapplication.appUser.userDetails.entity;
 
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,7 +43,7 @@ public class AppUser implements UserDetails {
 
     private Boolean locked = false;
     private Boolean enabled = false;
-
+    @JsonManagedReference
     @OneToOne(mappedBy = "appUser", cascade = CascadeType.ALL)
     private ProfileUserEntity profileUserEntity;
 

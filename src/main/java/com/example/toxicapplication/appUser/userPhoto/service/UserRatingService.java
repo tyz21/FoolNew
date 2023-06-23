@@ -1,7 +1,9 @@
 package com.example.toxicapplication.appUser.userPhoto.service;
 
-import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
-import com.example.toxicapplication.appUser.userPhoto.reposirory.UserPhotoRepository;
+import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
+import com.example.toxicapplication.appUser.userDetails.repository.AppUserRepository;
+import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
+import com.example.toxicapplication.appUser.userPhoto.reposirory.UserPhotoRepositoryDemo;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserRepository;
 import lombok.AllArgsConstructor;
@@ -11,17 +13,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-import static com.example.toxicapplication.utility.UserUtility.checkNull;
-
 @Service
 @Slf4j
 @AllArgsConstructor
 public class UserRatingService {
-    private final UserPhotoRepository userPhotoRepository;
+    private final UserPhotoRepositoryDemo userPhotoRepository;
     private final ProfileUserRepository profileUserRepository;
+    private final AppUserRepository appUserRepository;
+
     @Transactional
     public double postRating(Long photoId, double rating) {
-        UserPhotoEntity userPhotoEntity = userPhotoRepository.findById(photoId).get();
+        UserPhotoEntityDemo userPhotoEntity = userPhotoRepository.findById(photoId).get();
 
         Integer countMark = userPhotoEntity.getCountMark();
         Double sumMark = userPhotoEntity.getSumMark();
@@ -39,32 +41,43 @@ public class UserRatingService {
         }
         userPhotoRepository.save(userPhotoEntity);
 
-        ProfileUserEntity profileUserEntity = userPhotoEntity.getProfileUserEntity();
-        checkNull(profileUserEntity);
+        AppUser appUser = userPhotoEntity.getAppUser();
+        ProfileUserEntity profileUserEntity = profileUserRepository.findById(appUser.getId()).get();
 
         setRatingForProfile(profileUserEntity.getId());
-        setTopUserForProfileAndPhoto(profileUserEntity.getId());
+        setTopUserForProfileAndPhoto();
 
         return userPhotoEntity.getRatingPhoto();
     }
 
     public void setRatingForProfile(Long id) {
         ProfileUserEntity profileUser = profileUserRepository.findById(id).orElse(null);
-        checkNull(profileUser);
-        Long lastIdAddPhoto = profileUser.getAllIdRectanglePhotoUser().get(profileUser.getAllIdRectanglePhotoUser().size() - 1);
 
-        UserPhotoEntity userPhotoEntity = userPhotoRepository.findById(lastIdAddPhoto).orElse(null);
-        checkNull(userPhotoEntity);
+        Long lastIdAddPhoto = profileUser.getAllIdPhotoUser().get(profileUser.getAllIdPhotoUser().size() - 1);
+
+        UserPhotoEntityDemo userPhotoEntity = userPhotoRepository.findById(lastIdAddPhoto).orElse(null);
 
         double ratingPhoto = Objects.requireNonNull(userPhotoEntity).getRatingPhoto();
         profileUser.setRatingUser(ratingPhoto);
         profileUserRepository.save(profileUser);
 
     }
-
-    public void setTopUserForProfileAndPhoto(Long id) {
-        ProfileUserEntity profileUser = profileUserRepository.findById(id).orElse(null);
-        checkNull(profileUser);
+//public void setRatingForProfile(Long id) {
+//        AppUser appUser = appUserRepository.findById(id).get();
+//        List<UserPhotoEntityDemo> userPhotoEntityDemo = userPhotoRepository.findAllByAppUserId(appUser.getId());
+//
+//  //  ProfileUserEntity profileUser = profileUserRepository.findById(id).orElse(null);
+//
+//  //  Long lastIdAddPhoto = profileUser.getAllIdPhotoUser().get(profileUser.getAllIdPhotoUser().size() - 1);
+//
+//    UserPhotoEntityDemo userPhotoEntity = userPhotoRepository.findById(lastIdAddPhoto).orElse(null);
+//
+//    double ratingPhoto = Objects.requireNonNull(userPhotoEntity).getRatingPhoto();
+//    profileUser.setRatingUser(ratingPhoto);
+//    profileUserRepository.save(profileUser);
+//
+//}
+    public void setTopUserForProfileAndPhoto() {
 
         List<ProfileUserEntity> allProfiles = profileUserRepository.findAll();
 
@@ -79,16 +92,16 @@ public class UserRatingService {
 
             profile.setTopUser(i + 1);
 
-            List<Long> allIdRectanglePhotoUser = profile.getAllIdRectanglePhotoUser();
-            if (allIdRectanglePhotoUser.isEmpty()) {
-                continue;
-            }
-            Long lastIdAddPhoto = profile.getAllIdRectanglePhotoUser().get(profile.getAllIdRectanglePhotoUser().size() - 1);
+//            List<Long> allIdPhotoUser = profile.getAllIdPhotoUser();
+//            if (allIdPhotoUser.isEmpty()) {
+//                continue;
+//            }
+            Long lastIdAddPhoto = profile.getAllIdPhotoUser().get(profile.getAllIdPhotoUser().size() - 1);
 
             if (lastIdAddPhoto == 0) {
                 continue;
             }
-            UserPhotoEntity userPhoto = userPhotoRepository.findById(lastIdAddPhoto).get();
+            UserPhotoEntityDemo userPhoto = userPhotoRepository.findById(lastIdAddPhoto).get();
             userPhoto.setTopPhoto(i + 1L);
 
             profileUserRepository.save(profile);
