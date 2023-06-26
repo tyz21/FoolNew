@@ -18,10 +18,10 @@ public class ProfileUserController {
         return profileUserService.searchUser(requestSearch);
     }
 
-    @GetMapping("/top-user")
-    public List<ProfileUserEntity> getAllUser() {
-        return profileUserService.getAllTopUsers();
-    }
+//    @GetMapping("/top-user")
+//    public List<ProfileUserEntity> getAllUser() {
+//        return profileUserService.getAllTopUsers();
+//    }
 
     @GetMapping("get/{idProfile}")
     public ProfileUserEntity getProfile(@PathVariable Long idProfile) {

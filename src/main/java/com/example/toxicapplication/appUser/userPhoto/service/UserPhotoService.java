@@ -20,21 +20,21 @@ public class UserPhotoService {
     private final ProfileUserRepository profileUserRepository;
     private final UserPhotoRepositoryDemo userPhotoRepository;
 
-    public List<ProfileUserEntity> provideRandomUsers() throws NoPhotoForProfileException {
-        List<ProfileUserEntity> randomUsers = new ArrayList<>();
-        ProfileUserEntity randomUser;
-        long maxId = profileUserRepository.getMaxId();
-        while (randomUsers.size() < 20) {
-            long randomId = (long) (Math.random() * maxId) + 1L;
-            randomUser = profileUserRepository.findById(randomId).get();
-
-            if (randomUser != null) {
-                randomUsers.add(randomUser);
-            }
-        }
-
-        return randomUsers;
-    }
+//    public List<ProfileUserEntity> provideRandomUsers() throws NoPhotoForProfileException {
+//        List<ProfileUserEntity> randomUsers = new ArrayList<>();
+//        ProfileUserEntity randomUser;
+//        long maxId = profileUserRepository.getMaxId();
+//        while (randomUsers.size() < 20) {
+//            long randomId = (long) (Math.random() * maxId) + 1L;
+//            randomUser = profileUserRepository.findById(randomId).get();
+//
+//            if (randomUser != null) {
+//                randomUsers.add(randomUser);
+//            }
+//        }
+//
+//        return randomUsers;
+//    }
 
     @Transactional
     public List<UserPhotoEntityDemo> getALlPhotoData(Long id) {

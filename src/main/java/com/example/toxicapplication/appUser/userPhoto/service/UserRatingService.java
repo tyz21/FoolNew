@@ -19,7 +19,6 @@ import java.util.*;
 public class UserRatingService {
     private final UserPhotoRepositoryDemo userPhotoRepository;
     private final ProfileUserRepository profileUserRepository;
-    private final AppUserRepository appUserRepository;
 
     @Transactional
     public double postRating(Long photoId, double rating) {
@@ -62,21 +61,7 @@ public class UserRatingService {
         profileUserRepository.save(profileUser);
 
     }
-//public void setRatingForProfile(Long id) {
-//        AppUser appUser = appUserRepository.findById(id).get();
-//        List<UserPhotoEntityDemo> userPhotoEntityDemo = userPhotoRepository.findAllByAppUserId(appUser.getId());
-//
-//  //  ProfileUserEntity profileUser = profileUserRepository.findById(id).orElse(null);
-//
-//  //  Long lastIdAddPhoto = profileUser.getAllIdPhotoUser().get(profileUser.getAllIdPhotoUser().size() - 1);
-//
-//    UserPhotoEntityDemo userPhotoEntity = userPhotoRepository.findById(lastIdAddPhoto).orElse(null);
-//
-//    double ratingPhoto = Objects.requireNonNull(userPhotoEntity).getRatingPhoto();
-//    profileUser.setRatingUser(ratingPhoto);
-//    profileUserRepository.save(profileUser);
-//
-//}
+
     public void setTopUserForProfileAndPhoto() {
 
         List<ProfileUserEntity> allProfiles = profileUserRepository.findAll();

@@ -1,7 +1,6 @@
 package com.example.toxicapplication.appUser.userProfile;
 
 import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
-//import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
 import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
 import com.fasterxml.jackson.annotation.*;
 import lombok.Data;

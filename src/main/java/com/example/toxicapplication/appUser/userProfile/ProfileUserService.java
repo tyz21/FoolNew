@@ -40,27 +40,27 @@ public class ProfileUserService {
         return matchingUsers;
     }
 
-    public List<ProfileUserEntity> getAllTopUsers() {
-        List<ProfileUserEntity> users = new ArrayList<>();
-        int page = 0;
-        int pageSize = 50;
-        Sort sort = Sort.by(Sort.Direction.ASC, "topUser");
-
-        while (true) {
-            Pageable pageable = PageRequest.of(page, pageSize, sort);
-            Page<ProfileUserEntity> resultPage = profileUserRepository.findAll(pageable);
-            List<ProfileUserEntity> profileUsers = resultPage.getContent();
-
-            users.addAll(profileUsers);
-
-            if (!resultPage.hasNext()) {
-                break;
-            }
-            page++;
-        }
-
-        return users;
-    }
+//    public List<ProfileUserEntity> getAllTopUsers() {
+//        List<ProfileUserEntity> users = new ArrayList<>();
+//        int page = 0;
+//        int pageSize = 50;
+//        Sort sort = Sort.by(Sort.Direction.ASC, "topUser");
+//
+//        while (true) {
+//            Pageable pageable = PageRequest.of(page, pageSize, sort);
+//            Page<ProfileUserEntity> resultPage = profileUserRepository.findAll(pageable);
+//            List<ProfileUserEntity> profileUsers = resultPage.getContent();
+//
+//            users.addAll(profileUsers);
+//
+//            if (!resultPage.hasNext()) {
+//                break;
+//            }
+//            page++;
+//        }
+//
+//        return users;
+//    }
 
     public ProfileUserEntity getProfile(Long profileId) {
         return profileUserRepository.findById(profileId).orElse(null);

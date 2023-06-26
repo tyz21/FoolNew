@@ -17,10 +17,10 @@ import java.util.List;
 public class UserPhotoController {
     private final UserPhotoService userPhotoService;
 
-    @GetMapping("/randomUsers")
-    public List<ProfileUserEntity> getRandomUsers() throws NoPhotoForProfileException {
-        return userPhotoService.provideRandomUsers();
-    }
+//    @GetMapping("/randomUsers")
+//    public List<ProfileUserEntity> getRandomUsers() throws NoPhotoForProfileException {
+//        return userPhotoService.provideRandomUsers();
+//    }
     @GetMapping("/profile/{profileId}")
     public List<UserPhotoEntityDemo> getALlPhotoData(@PathVariable Long profileId)  {
         return userPhotoService.getALlPhotoData(profileId);

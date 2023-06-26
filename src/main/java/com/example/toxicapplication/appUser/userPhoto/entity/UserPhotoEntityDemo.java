@@ -4,11 +4,9 @@ import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
@@ -26,17 +24,13 @@ public class UserPhotoEntityDemo {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
-    //  @JsonBackReference
-    //@JsonIgnoreProperties("profileUserEntity")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profile_user_id")
     private ProfileUserEntity profileUserEntity;
     @Lob
-   // @Type(type = "org.hibernate.type.ImageType")
     @Column(name = "photo_rectangle")
     private byte[] photoRectangle;
     @Lob
-    //@Type(type = "org.hibernate.type.ImageType")
     @Column(name = "photo_circle")
     private byte[] photoCircle;
     @JsonIgnore
@@ -66,9 +60,6 @@ public class UserPhotoEntityDemo {
             }
         }
     }
-//    public UserPhotoEntityDemo(AppUser appUser) {
-//        this.appUser = appUser;
-//    }
     public UserPhotoEntityDemo(AppUser appUser, ProfileUserEntity profileUserEntity) {
         this.appUser = appUser;
         this.profileUserEntity = profileUserEntity;
