@@ -1,13 +1,12 @@
 package com.example.toxicapplication.appUser.userPhoto.controller;
 
-//import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
-
 import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
 import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
-//import com.example.toxicapplication.appUser.userPhoto.service.UserPhotoService;
 import com.example.toxicapplication.appUser.userPhoto.service.UserPhotoServiceDemo;
 import com.example.toxicapplication.exception.NoPhotoForProfileException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +22,11 @@ public class UserPhotoControllerDemo {
     @Autowired
     public UserPhotoControllerDemo(UserPhotoServiceDemo photoService) {
         this.photoService = photoService;
+    }
+
+    @DeleteMapping("/delete/{idPhoto}")
+    public void deletePhoto(@PathVariable Long idPhoto) {
+        photoService.removePhoto(idPhoto);
     }
 
     @PostMapping("/upload")
@@ -41,16 +45,21 @@ public class UserPhotoControllerDemo {
     }
 
     @GetMapping("/{type}/{photoId}")
-    public byte[] getPhoto(@PathVariable String type, @PathVariable Long photoId) throws NoPhotoForProfileException {
+    public ResponseEntity<byte[]> getPhoto(@PathVariable String type, @PathVariable Long photoId) throws NoPhotoForProfileException {
         UserPhotoEntityDemo photo = photoService.getPhotoById(photoId);
+        // HttpHeaders headers = photoService.getCacheHeaders();
         if (photo == null) {
             throw new NoPhotoForProfileException("no photo");
         }
 
         if (type.equals("rectangle")) {
-            return photo.getPhotoRectangle();
+            return ResponseEntity.ok()
+                    //.headers(headers)
+                    .body(photo.getPhotoRectangle());
         } else if (type.equals("circle")) {
-            return photo.getPhotoCircle();
+            return ResponseEntity.ok()
+                    // .headers(headers)
+                    .body(photo.getPhotoCircle());
         } else {
             throw new IllegalArgumentException("Invalid photo type");
         }

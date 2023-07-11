@@ -21,24 +21,24 @@ import java.util.List;
 public class ProfileUserService {
     private final ProfileUserRepository profileUserRepository;
 
-    public List<ProfileUserEntity> searchUser(String requestSearch) {
-        Pageable pageable = PageRequest.of(0, 50, Sort.by(Sort.Direction.ASC, "profileName"));
-        Page<ProfileUserEntity> page = profileUserRepository.findAll(pageable);
-        List<ProfileUserEntity> users = new ArrayList<>(page.getContent());
-        users.sort(new ProfileComparator(requestSearch));
-
-        List<ProfileUserEntity> matchingUsers = new ArrayList<>();
-        for (ProfileUserEntity user : users) {
-            if (user == null || user.getProfileName() == null) {
-                continue;
-            }
-            if (user.getProfileName().toLowerCase().contains(requestSearch) || user.getProfileName().contains(requestSearch)) {
-                matchingUsers.add(user);
-            }
-        }
-
-        return matchingUsers;
-    }
+//    public List<ProfileUserEntity> searchUser(String requestSearch) {
+//        Pageable pageable = PageRequest.of(0, 50, Sort.by(Sort.Direction.ASC, "profileName"));
+//        Page<ProfileUserEntity> page = profileUserRepository.findAll(pageable);
+//        List<ProfileUserEntity> users = new ArrayList<>(page.getContent());
+//        users.sort(new ProfileComparator(requestSearch));
+//
+//        List<ProfileUserEntity> matchingUsers = new ArrayList<>();
+//        for (ProfileUserEntity user : users) {
+//            if (user == null || user.getProfileName() == null) {
+//                continue;
+//            }
+//            if (user.getProfileName().toLowerCase().contains(requestSearch) || user.getProfileName().contains(requestSearch)) {
+//                matchingUsers.add(user);
+//            }
+//        }
+//
+//        return matchingUsers;
+//    }
 
 //    public List<ProfileUserEntity> getAllTopUsers() {
 //        List<ProfileUserEntity> users = new ArrayList<>();

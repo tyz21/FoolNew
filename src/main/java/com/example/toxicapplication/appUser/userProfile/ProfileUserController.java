@@ -13,10 +13,10 @@ import java.util.List;
 public class ProfileUserController {
     private final ProfileUserService profileUserService;
 
-    @GetMapping("search/{requestSearch}")
-    public List<ProfileUserEntity> requestSearch(@PathVariable String requestSearch) {
-        return profileUserService.searchUser(requestSearch);
-    }
+//    @GetMapping("search/{requestSearch}")
+//    public List<ProfileUserEntity> requestSearch(@PathVariable String requestSearch) {
+//        return profileUserService.searchUser(requestSearch);
+//    }
 
 //    @GetMapping("/top-user")
 //    public List<ProfileUserEntity> getAllUser() {

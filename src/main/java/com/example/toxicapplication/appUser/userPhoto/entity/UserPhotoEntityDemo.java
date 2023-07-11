@@ -9,13 +9,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserPhotoEntityDemo {
+public class UserPhotoEntityDemo implements Comparable<UserPhotoEntityDemo>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,7 +42,8 @@ public class UserPhotoEntityDemo {
     private Double sumMark;
     @Column
     private double ratingPhoto;
-
+    @Column(name = "date_created")
+    private LocalDateTime dateCreated;
     @Column
     private long topPhoto;
 
@@ -63,5 +65,10 @@ public class UserPhotoEntityDemo {
     public UserPhotoEntityDemo(AppUser appUser, ProfileUserEntity profileUserEntity) {
         this.appUser = appUser;
         this.profileUserEntity = profileUserEntity;
+    }
+
+    @Override
+    public int compareTo(UserPhotoEntityDemo other) {
+        return this.dateCreated.compareTo(other.dateCreated);
     }
 }

@@ -7,15 +7,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
 @Data
-public class ProfileUserEntity {
+public class ProfileUserEntity implements Comparable<ProfileUserEntity>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,7 +23,6 @@ public class ProfileUserEntity {
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
 
-    //@JsonManagedReference
     @OneToMany(mappedBy = "profileUserEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserPhotoEntityDemo> userPhotos = new ArrayList<>();
     @Column
@@ -32,15 +30,16 @@ public class ProfileUserEntity {
     @Column
     private double ratingUser;
     @Column
-    @OrderBy("topUser ASC")
+    //@OrderBy("topUser ASC")
     private long topUser;
-    @Column
-    private String subscriberId;
+//    @OneToMany(mappedBy = "profileUserEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Set<Subscriber> subscribers = new HashSet<>();
     @Column
     private String subscriptionId;
     @Column(name = "all_id_photo")
     private String allIdPhotoUser;
-
+    @Column(name = "date_created")
+    private LocalDateTime dateCreated;
     public ProfileUserEntity(AppUser appUser) {
         this.appUser = appUser;
         this.allIdPhotoUser = "";
@@ -62,4 +61,8 @@ public class ProfileUserEntity {
                 .collect(Collectors.joining(","));
     }
 
+    @Override
+    public int compareTo(ProfileUserEntity other) {
+        return Long.compare(this.topUser, other.topUser);
+    }
 }

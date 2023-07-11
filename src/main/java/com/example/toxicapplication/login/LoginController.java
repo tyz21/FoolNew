@@ -25,6 +25,10 @@ public class LoginController {
         try {
             UserDetails userDetails = appUserService.loadUserByUsername(userName);
 
+            if(userName.isEmpty() || password.isEmpty()){
+                return "userName or password is empty";
+            }
+
             if (!userDetails.isEnabled()) {
                 return "confirm your email";
             }

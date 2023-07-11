@@ -7,5 +7,6 @@ public class TopDTO {
     private String profileName;
     private double ratingUser;
     private long topUser;
+    private Long idPhotoCircle;
     private byte [] lastCirclePhoto;
 }

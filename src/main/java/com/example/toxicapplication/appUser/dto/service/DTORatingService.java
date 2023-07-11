@@ -5,15 +5,15 @@ import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @AllArgsConstructor
 @Service
+@Slf4j
 public class DTORatingService {
     private final ProfileUserRepository profileUserRepository;
     private final TransactionTemplate transactionTemplate;
@@ -28,12 +28,13 @@ public class DTORatingService {
                 ratingDTO.setProfileName(profileUserEntity.getProfileName());
                 ratingDTO.setRatingUser(profileUserEntity.getRatingUser());
                 ratingDTO.setTopUser(profileUserEntity.getTopUser());
-
+                ratingDTO.setIdProfile(profileUserEntity.getId());
                 List<UserPhotoEntityDemo> userPhotos = profileUserEntity.getUserPhotos();
                 if (!userPhotos.isEmpty()) {
-                    UserPhotoEntityDemo lastUserPhoto = userPhotos.get(userPhotos.size() - 1);
-                    ratingDTO.setIdPhoto(lastUserPhoto.getId());
-                    ratingDTO.setPhotoRectangle(lastUserPhoto.getPhotoRectangle());
+                    UserPhotoEntityDemo lastRectanglePhoto = Collections.max(userPhotos, Comparator.comparing(UserPhotoEntityDemo::getDateCreated));
+                    ratingDTO.setIdPhotoCircle(lastRectanglePhoto.getId());
+                    ratingDTO.setPhotoRectangle(lastRectanglePhoto.getPhotoRectangle());
+                    ratingDTO.setIdPhoto(lastRectanglePhoto.getId());
                 }
 
                 randomRatingDTOs.add(ratingDTO);
@@ -60,39 +61,5 @@ public class DTORatingService {
 
         return randomUsers;
     }
-//    public RatingDTO getRatingDTO(Long profileUserId) {
-//        return transactionTemplate.execute(status -> {
-//            ProfileUserEntity profileUserEntity = profileUserRepository.findById(profileUserId)
-//                    .orElseThrow(() -> new EntityNotFoundException("Profile user not found"));
-//
-//            RatingDTO ratingDTO = new RatingDTO();
-//            ratingDTO.setProfileName(profileUserEntity.getProfileName());
-//            ratingDTO.setRatingUser(profileUserEntity.getRatingUser());
-//            ratingDTO.setTopUser(profileUserEntity.getTopUser());
-//
-//            List<UserPhotoEntityDemo> userPhotos = profileUserEntity.getUserPhotos();
-//            if (!userPhotos.isEmpty()) {
-//                UserPhotoEntityDemo lastUserPhoto = userPhotos.get(userPhotos.size() - 1);
-//                ratingDTO.setPhotoRectangle(lastUserPhoto.getPhotoRectangle());
-//            }
-//
-//            return ratingDTO;
-//        });
-//    }
-//
-//    public List<ProfileUserEntity> provideRandomUsers() throws NoPhotoForProfileException {
-//        List<ProfileUserEntity> randomUsers = new ArrayList<>();
-//        ProfileUserEntity randomUser;
-//        long maxId = profileUserRepository.getMaxId();
-//        while (randomUsers.size() < 20) {
-//            long randomId = (long) (Math.random() * maxId) + 1L;
-//            randomUser = profileUserRepository.findById(randomId).get();
-//
-//            if (randomUser != null) {
-//                randomUsers.add(randomUser);
-//            }
-//        }
-//
-//        return randomUsers;
-//    }
+
 }

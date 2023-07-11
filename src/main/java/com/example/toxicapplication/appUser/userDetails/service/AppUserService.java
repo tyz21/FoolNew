@@ -62,7 +62,7 @@ public class AppUserService implements UserDetailsService {
 
         profileUser.setRatingUser(0.0);
         Long maxId = profileUserRepository.getMaxId();
-        profileUser.setTopUser(maxId); // check
+        profileUser.setTopUser(maxId);
 
         profileUserRepository.save(profileUser);
 

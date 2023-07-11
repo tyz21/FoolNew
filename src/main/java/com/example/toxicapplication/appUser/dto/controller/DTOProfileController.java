@@ -1,17 +1,10 @@
 package com.example.toxicapplication.appUser.dto.controller;
 
-import com.example.toxicapplication.appUser.dto.ProfileUserDTO;
-import com.example.toxicapplication.appUser.dto.RatingDTO;
-import com.example.toxicapplication.appUser.dto.TopDTO;
-import com.example.toxicapplication.appUser.dto.service.DTOProfileService;
-import com.example.toxicapplication.appUser.dto.service.DTORatingService;
-import com.example.toxicapplication.appUser.dto.service.DTOTopService;
+import com.example.toxicapplication.appUser.dto.*;
+import com.example.toxicapplication.appUser.dto.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +15,8 @@ public class DTOProfileController {
     private final DTOProfileService dTOProfileService;
     private final DTORatingService dtoRatingService;
     private final DTOTopService dtoTopService;
+    private final DTOSearchService dtoSearchService;
+    private final SubscribeServiceDTO subscribeServiceDTO;
 
     @GetMapping("/{profileUserId}")
     public ResponseEntity<ProfileUserDTO> getDtoUser(@PathVariable Long profileUserId) {
@@ -39,5 +34,15 @@ public class DTOProfileController {
     public ResponseEntity<List<TopDTO>> getAllTopDTOs() {
         List<TopDTO> topDTOs = dtoTopService.getAllTopDTOs();
         return ResponseEntity.ok(topDTOs);
+    }
+
+    @GetMapping("/search/{requestSearch}")
+    public List<SearchDTO> requestSearch(@PathVariable String requestSearch) {
+        return dtoSearchService.searchUser(requestSearch);
+    }
+
+    @GetMapping("/subscribe/{idUser}")
+    public List<SubscribeDTO> getSubscriber(@PathVariable Long idUser){
+        return subscribeServiceDTO.getSubscriber(idUser);
     }
 }

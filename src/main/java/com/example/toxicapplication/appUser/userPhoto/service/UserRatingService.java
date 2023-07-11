@@ -1,7 +1,5 @@
 package com.example.toxicapplication.appUser.userPhoto.service;
 
-import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
-import com.example.toxicapplication.appUser.userDetails.repository.AppUserRepository;
 import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
 import com.example.toxicapplication.appUser.userPhoto.reposirory.UserPhotoRepositoryDemo;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
@@ -40,17 +38,17 @@ public class UserRatingService {
         }
         userPhotoRepository.save(userPhotoEntity);
 
-        AppUser appUser = userPhotoEntity.getAppUser();
-        ProfileUserEntity profileUserEntity = profileUserRepository.findById(appUser.getId()).get();
-
-        setRatingForProfile(profileUserEntity.getId());
-        setTopUserForProfileAndPhoto();
+        ProfileUserEntity profileUser = userPhotoEntity.getProfileUserEntity();
+        setRatingForProfile(profileUser.getId());
+        makeTopFromRating();
 
         return userPhotoEntity.getRatingPhoto();
     }
 
     public void setRatingForProfile(Long id) {
         ProfileUserEntity profileUser = profileUserRepository.findById(id).orElse(null);
+
+        assert profileUser != null;
 
         Long lastIdAddPhoto = profileUser.getAllIdPhotoUser().get(profileUser.getAllIdPhotoUser().size() - 1);
 
@@ -59,28 +57,20 @@ public class UserRatingService {
         double ratingPhoto = Objects.requireNonNull(userPhotoEntity).getRatingPhoto();
         profileUser.setRatingUser(ratingPhoto);
         profileUserRepository.save(profileUser);
-
     }
 
-    public void setTopUserForProfileAndPhoto() {
-
+    private void makeTopFromRating() {
         List<ProfileUserEntity> allProfiles = profileUserRepository.findAll();
 
         allProfiles.sort(Comparator.comparingDouble(ProfileUserEntity::getRatingUser).reversed());
 
-        makeTopFromRating(allProfiles);
-    }
-
-    private void makeTopFromRating(List<ProfileUserEntity> allProfiles) {
         for (int i = 0; i < allProfiles.size(); i++) {
             ProfileUserEntity profile = allProfiles.get(i);
 
             profile.setTopUser(i + 1);
-
-//            List<Long> allIdPhotoUser = profile.getAllIdPhotoUser();
-//            if (allIdPhotoUser.isEmpty()) {
-//                continue;
-//            }
+            if (profile.getAllIdPhotoUser().size() == 0) {
+                continue;
+            }
             Long lastIdAddPhoto = profile.getAllIdPhotoUser().get(profile.getAllIdPhotoUser().size() - 1);
 
             if (lastIdAddPhoto == 0) {
