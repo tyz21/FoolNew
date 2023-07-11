@@ -1,4 +1,4 @@
-package com.example.toxicapplication.appUser.subscriber;
+package com.example.toxicapplication.appUser.subscribe;
 
 import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
 import com.example.toxicapplication.appUser.userDetails.repository.AppUserRepository;

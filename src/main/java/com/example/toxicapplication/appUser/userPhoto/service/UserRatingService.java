@@ -1,7 +1,7 @@
 package com.example.toxicapplication.appUser.userPhoto.service;
 
 import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
-import com.example.toxicapplication.appUser.userPhoto.reposirory.UserPhotoRepositoryDemo;
+import com.example.toxicapplication.appUser.userPhoto.reposirory.UserPhotoRepository;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserRepository;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.*;
 @Slf4j
 @AllArgsConstructor
 public class UserRatingService {
-    private final UserPhotoRepositoryDemo userPhotoRepository;
+    private final UserPhotoRepository userPhotoRepository;
     private final ProfileUserRepository profileUserRepository;
 
     @Transactional

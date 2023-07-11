@@ -1,7 +1,6 @@
 package com.example.toxicapplication.appUser.dto.service;
 
 import com.example.toxicapplication.appUser.dto.SearchDTO;
-import com.example.toxicapplication.appUser.dto.TopDTO;
 import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserRepository;
@@ -21,7 +20,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
-public class DTOSearchService {
+public class SearchServiceDTO {
     private final ProfileUserRepository profileUserRepository;
     private final TransactionTemplate transactionTemplate;
 

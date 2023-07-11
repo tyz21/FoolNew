@@ -1,14 +1,11 @@
 package com.example.toxicapplication.appUser.dto.service;
 
 import com.example.toxicapplication.appUser.dto.SubscribeDTO;
-import com.example.toxicapplication.appUser.dto.UserPhotoDTO;
-import com.example.toxicapplication.appUser.subscriber.Subscribe;
-import com.example.toxicapplication.appUser.subscriber.SubscribeRepository;
+import com.example.toxicapplication.appUser.subscribe.Subscribe;
+import com.example.toxicapplication.appUser.subscribe.SubscribeRepository;
 import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
-import com.example.toxicapplication.appUser.userProfile.ProfileUserRepository;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 

@@ -48,7 +48,7 @@ public class RegistrationService {
 //        // Update the user's account with the new access token
 //        appUserService.updateAccessToken(request.getUserName(), newAccessToken);
 
-        String link = "https://58ec-46-216-179-145.eu.ngrok.io/api/v1/registration/confirm?token=" + token;
+        String link = "https://89a1-46-216-179-145.eu.ngrok.io/api/v1/registration/confirm?token=" + token;
         emailSender.send(
                 request.getEmail(),
                 buildEmail(request.getUserName(), link));

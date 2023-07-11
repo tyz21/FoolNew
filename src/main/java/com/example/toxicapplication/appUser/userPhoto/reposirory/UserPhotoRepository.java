@@ -7,5 +7,5 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public interface UserPhotoRepositoryDemo extends JpaRepository<UserPhotoEntityDemo, Long> {
+public interface UserPhotoRepository extends JpaRepository<UserPhotoEntityDemo, Long> {
 }

@@ -1,4 +1,4 @@
-package com.example.toxicapplication.appUser.subscriber;
+package com.example.toxicapplication.appUser.subscribe;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;

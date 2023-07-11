@@ -14,7 +14,7 @@ import java.util.*;
 @AllArgsConstructor
 @Service
 @Slf4j
-public class DTORatingService {
+public class RatingServiceDTO {
     private final ProfileUserRepository profileUserRepository;
     private final TransactionTemplate transactionTemplate;
 

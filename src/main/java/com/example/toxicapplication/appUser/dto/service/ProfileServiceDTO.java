@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 @Slf4j
 @AllArgsConstructor
-public class DTOProfileService {
+public class ProfileServiceDTO {
     private final ProfileUserRepository profileUserRepository;
     private final TransactionTemplate transactionTemplate;
 
@@ -33,30 +33,33 @@ public class DTOProfileService {
             profileUserDTO.setProfileName(profileUserEntity.getProfileName());
             profileUserDTO.setRatingUser(profileUserEntity.getRatingUser());
             profileUserDTO.setTopUser(profileUserEntity.getTopUser());
+            if (profileUserEntity.getUserPhotos() != null) {
+                List<UserPhotoEntityDemo> userPhotos = profileUserEntity.getUserPhotos();
+                userPhotos.sort(Comparator.comparing(UserPhotoEntityDemo::getDateCreated).reversed());
 
-            List<UserPhotoEntityDemo> userPhotos = profileUserEntity.getUserPhotos();
-            userPhotos.sort(Comparator.comparing(UserPhotoEntityDemo::getDateCreated).reversed());
+                List<UserPhotoDTO> userPhotosDTO = new ArrayList<>();
+                UserPhotoEntityDemo lastCirclePhoto = Collections.max(userPhotos, Comparator.comparing(UserPhotoEntityDemo::getDateCreated));
+                profileUserDTO.setIdPhotoCircle(lastCirclePhoto.getId());
+                profileUserDTO.setLastCirclePhoto(lastCirclePhoto.getPhotoCircle());
 
-            List<UserPhotoDTO> userPhotosDTO = new ArrayList<>();
-            UserPhotoEntityDemo lastCirclePhoto = Collections.max(userPhotos, Comparator.comparing(UserPhotoEntityDemo::getDateCreated));
-            profileUserDTO.setIdPhotoCircle(lastCirclePhoto.getId());
-            profileUserDTO.setLastCirclePhoto(lastCirclePhoto.getPhotoCircle());
+                for (UserPhotoEntityDemo userPhotoEntity : userPhotos) {
+                    UserPhotoDTO userPhotoDTO = new UserPhotoDTO();
+                    userPhotoDTO.setIdPhoto(userPhotoEntity.getId());
+                    userPhotoDTO.setPhotoRectangle(userPhotoEntity.getPhotoRectangle());
+                    userPhotoDTO.setCountMark(userPhotoEntity.getCountMark());
+                    userPhotoDTO.setSumMark(userPhotoEntity.getSumMark());
+                    userPhotoDTO.setRatingPhoto(userPhotoEntity.getRatingPhoto());
+                    userPhotoDTO.setTopPhoto(userPhotoEntity.getTopPhoto());
+                    userPhotoDTO.setDateCreated(userPhotoEntity.getDateCreated().toString());
+                    userPhotosDTO.add(userPhotoDTO);
+                }
 
-            for (UserPhotoEntityDemo userPhotoEntity : userPhotos) {
-                UserPhotoDTO userPhotoDTO = new UserPhotoDTO();
-                userPhotoDTO.setIdPhoto(userPhotoEntity.getId());
-                userPhotoDTO.setPhotoRectangle(userPhotoEntity.getPhotoRectangle());
-                userPhotoDTO.setCountMark(userPhotoEntity.getCountMark());
-                userPhotoDTO.setSumMark(userPhotoEntity.getSumMark());
-                userPhotoDTO.setRatingPhoto(userPhotoEntity.getRatingPhoto());
-                userPhotoDTO.setTopPhoto(userPhotoEntity.getTopPhoto());
-                userPhotoDTO.setDateCreated(userPhotoEntity.getDateCreated().toString());
-                userPhotosDTO.add(userPhotoDTO);
+                profileUserDTO.setUserPhotos(userPhotosDTO);
+
+                return profileUserDTO;
+        } else {
+                return null;
             }
-
-            profileUserDTO.setUserPhotos(userPhotosDTO);
-
-            return profileUserDTO;
-        });
+        } );
     }
 }

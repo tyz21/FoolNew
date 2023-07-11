@@ -1,10 +1,9 @@
 package com.example.toxicapplication.appUser.userPhoto.service;
 
 import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
-import com.example.toxicapplication.appUser.userPhoto.reposirory.UserPhotoRepositoryDemo;
+import com.example.toxicapplication.appUser.userPhoto.reposirory.UserPhotoRepository;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserRepository;
-import com.example.toxicapplication.exception.NoPhotoForProfileException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserPhotoService {
     private final ProfileUserRepository profileUserRepository;
-    private final UserPhotoRepositoryDemo userPhotoRepository;
+    private final UserPhotoRepository userPhotoRepository;
 
 //    public List<ProfileUserEntity> provideRandomUsers() throws NoPhotoForProfileException {
 //        List<ProfileUserEntity> randomUsers = new ArrayList<>();

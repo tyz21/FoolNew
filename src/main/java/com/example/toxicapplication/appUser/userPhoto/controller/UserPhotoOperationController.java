@@ -2,10 +2,9 @@ package com.example.toxicapplication.appUser.userPhoto.controller;
 
 import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
 import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
-import com.example.toxicapplication.appUser.userPhoto.service.UserPhotoServiceDemo;
+import com.example.toxicapplication.appUser.userPhoto.service.UserPhotoOperationService;
 import com.example.toxicapplication.exception.NoPhotoForProfileException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +14,12 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/photo")
-public class UserPhotoControllerDemo {
+public class UserPhotoOperationController {
 
-    private final UserPhotoServiceDemo photoService;
+    private final UserPhotoOperationService photoService;
 
     @Autowired
-    public UserPhotoControllerDemo(UserPhotoServiceDemo photoService) {
+    public UserPhotoOperationController(UserPhotoOperationService photoService) {
         this.photoService = photoService;
     }
 

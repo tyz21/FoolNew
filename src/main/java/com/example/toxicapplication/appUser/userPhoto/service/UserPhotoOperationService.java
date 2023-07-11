@@ -3,25 +3,21 @@ package com.example.toxicapplication.appUser.userPhoto.service;
 import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
 import com.example.toxicapplication.appUser.userDetails.repository.AppUserRepository;
 import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
-import com.example.toxicapplication.appUser.userPhoto.reposirory.UserPhotoRepositoryDemo;
+import com.example.toxicapplication.appUser.userPhoto.reposirory.UserPhotoRepository;
 
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import java.io.*;
-
-import org.springframework.http.HttpHeaders;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -30,10 +26,10 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 @Slf4j
-public class UserPhotoServiceDemo {
+public class UserPhotoOperationService {
     private final AppUserRepository appUserRepository;
     private final ProfileUserRepository profileUserRepository;
-    private final UserPhotoRepositoryDemo userPhotoRepository;
+    private final UserPhotoRepository userPhotoRepository;
 
     public void removePhoto(Long idPhoto) {
         UserPhotoEntityDemo userPhoto = userPhotoRepository.findById(idPhoto).get();
