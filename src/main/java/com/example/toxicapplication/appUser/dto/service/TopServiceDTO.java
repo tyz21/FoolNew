@@ -1,7 +1,7 @@
 package com.example.toxicapplication.appUser.dto.service;
 
 import com.example.toxicapplication.appUser.dto.TopDTO;
-import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
+import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserRepository;
 import lombok.AllArgsConstructor;
@@ -67,9 +67,9 @@ public class TopServiceDTO {
             topDTO.setProfileName(profileUserEntity.getProfileName());
             topDTO.setRatingUser(profileUserEntity.getRatingUser());
             topDTO.setTopUser(profileUserEntity.getTopUser());
-            List<UserPhotoEntityDemo> userPhotos = profileUserEntity.getUserPhotos();
+            List<UserPhotoEntity> userPhotos = profileUserEntity.getUserPhotos();
             if (!userPhotos.isEmpty()) {
-                UserPhotoEntityDemo lastCirclePhoto = Collections.max(userPhotos, Comparator.comparing(UserPhotoEntityDemo::getDateCreated));
+                UserPhotoEntity lastCirclePhoto = Collections.max(userPhotos, Comparator.comparing(UserPhotoEntity::getDateCreated));
                 topDTO.setIdPhotoCircle(lastCirclePhoto.getId());
                 topDTO.setLastCirclePhoto(lastCirclePhoto.getPhotoCircle());
             }

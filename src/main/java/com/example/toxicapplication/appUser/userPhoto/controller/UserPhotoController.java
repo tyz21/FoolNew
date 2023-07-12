@@ -1,9 +1,7 @@
 package com.example.toxicapplication.appUser.userPhoto.controller;
 
-import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
+import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
 import com.example.toxicapplication.appUser.userPhoto.service.UserPhotoService;
-import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
-import com.example.toxicapplication.exception.NoPhotoForProfileException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +20,7 @@ public class UserPhotoController {
 //        return userPhotoService.provideRandomUsers();
 //    }
     @GetMapping("/profile/{profileId}")
-    public List<UserPhotoEntityDemo> getALlPhotoData(@PathVariable Long profileId)  {
+    public List<UserPhotoEntity> getALlPhotoData(@PathVariable Long profileId)  {
         return userPhotoService.getALlPhotoData(profileId);
     }
 }

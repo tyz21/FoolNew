@@ -1,6 +1,6 @@
 package com.example.toxicapplication.appUser.userPhoto.service;
 
-import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
+import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
 import com.example.toxicapplication.appUser.userPhoto.reposirory.UserPhotoRepository;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserRepository;
@@ -36,11 +36,11 @@ public class UserPhotoService {
 //    }
 
     @Transactional
-    public List<UserPhotoEntityDemo> getALlPhotoData(Long id) {
+    public List<UserPhotoEntity> getALlPhotoData(Long id) {
         ProfileUserEntity profileUser = profileUserRepository.findById(id).get();
-        List<UserPhotoEntityDemo> allPhoto = userPhotoRepository.findAll();
-        List<UserPhotoEntityDemo> allPhotoProfile = new ArrayList<>();
-        for (UserPhotoEntityDemo userPhoto : allPhoto) {
+        List<UserPhotoEntity> allPhoto = userPhotoRepository.findAll();
+        List<UserPhotoEntity> allPhotoProfile = new ArrayList<>();
+        for (UserPhotoEntity userPhoto : allPhoto) {
             if (userPhoto.getAppUser() == profileUser.getAppUser()) {
                 allPhotoProfile.add(userPhoto);
             }

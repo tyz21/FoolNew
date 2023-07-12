@@ -1,7 +1,7 @@
 package com.example.toxicapplication.appUser.userProfile;
 
 import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
-import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
+import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
 import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +24,7 @@ public class ProfileUserEntity implements Comparable<ProfileUserEntity>{
     private AppUser appUser;
 
     @OneToMany(mappedBy = "profileUserEntity", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserPhotoEntityDemo> userPhotos = new ArrayList<>();
+    private List<UserPhotoEntity> userPhotos = new ArrayList<>();
     @Column
     private String profileName;
     @Column

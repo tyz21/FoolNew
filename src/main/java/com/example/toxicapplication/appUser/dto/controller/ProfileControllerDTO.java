@@ -22,17 +22,13 @@ public class ProfileControllerDTO {
     @GetMapping("/{profileUserId}")
     public ResponseEntity<ProfileUserDTO> getDtoUser(@PathVariable Long profileUserId) {
         ProfileUserDTO profileUserDTO = dTOProfileServiceDTO.getProfileUserDTO(profileUserId);
-        return ResponseEntity.ok(profileUserDTO);
+            return ResponseEntity.ok(profileUserDTO);
     }
 
-    @GetMapping("/random/{count}")
-    public ResponseEntity<List<RatingDTO>> getRandomRatings(@PathVariable Long count) {
-        if (ratingServiceDTO.getRandomRatingDTOs(count) != null) {
-            List<RatingDTO> randomRatings = ratingServiceDTO.getRandomRatingDTOs(count);
-            return ResponseEntity.ok(randomRatings);
-        } else {
-            return ResponseEntity.ok(new ArrayList<>()); // ToDo check empty list
-        }
+    @GetMapping("/random/{count}/{idProfile}")
+    public ResponseEntity<List<RatingDTO>> getRandomRatings(@PathVariable Long count, @PathVariable Long idProfile) {
+        List<RatingDTO> randomRatings = ratingServiceDTO.getRandomRatingDTOs(count, idProfile);
+        return ResponseEntity.ok(randomRatings);
     }
 
     @GetMapping("/top")

@@ -2,7 +2,7 @@ package com.example.toxicapplication.appUser.userPhoto.service;
 
 import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
 import com.example.toxicapplication.appUser.userDetails.repository.AppUserRepository;
-import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
+import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
 import com.example.toxicapplication.appUser.userPhoto.reposirory.UserPhotoRepository;
 
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
@@ -32,7 +32,7 @@ public class UserPhotoOperationService {
     private final UserPhotoRepository userPhotoRepository;
 
     public void removePhoto(Long idPhoto) {
-        UserPhotoEntityDemo userPhoto = userPhotoRepository.findById(idPhoto).get();
+        UserPhotoEntity userPhoto = userPhotoRepository.findById(idPhoto).get();
         userPhotoRepository.delete(userPhoto);
     }
 
@@ -70,7 +70,7 @@ public class UserPhotoOperationService {
         ProfileUserEntity profileUserEntity = profileUserRepository.findById(appUser.getId()).get();
         byte[] circleBytes = circle.getBytes();
         byte[] rectangleBytes = rectangle.getBytes();
-        UserPhotoEntityDemo photo = new UserPhotoEntityDemo(appUser, profileUserEntity);
+        UserPhotoEntity photo = new UserPhotoEntity(appUser, profileUserEntity);
         // photo.setPhotoCircle(circleBytes);
         //  photo.setPhotoRectangle(rectangleBytes);
         photo.setPhotoCircle(compressImage(circleBytes));
@@ -89,7 +89,7 @@ public class UserPhotoOperationService {
         userPhotoRepository.save(photo);
     }
 
-    public UserPhotoEntityDemo getPhotoById(Long photoId) {
+    public UserPhotoEntity getPhotoById(Long photoId) {
         return userPhotoRepository.findById(photoId).orElse(null);
     }
 //    public HttpHeaders getCacheHeaders() {

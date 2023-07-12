@@ -1,7 +1,7 @@
 package com.example.toxicapplication.appUser.userPhoto.controller;
 
 import com.example.toxicapplication.appUser.userDetails.entity.AppUser;
-import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
+import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
 import com.example.toxicapplication.appUser.userPhoto.service.UserPhotoOperationService;
 import com.example.toxicapplication.exception.NoPhotoForProfileException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,7 @@ public class UserPhotoOperationController {
 
     @GetMapping("/{type}/{photoId}")
     public ResponseEntity<byte[]> getPhoto(@PathVariable String type, @PathVariable Long photoId) throws NoPhotoForProfileException {
-        UserPhotoEntityDemo photo = photoService.getPhotoById(photoId);
+        UserPhotoEntity photo = photoService.getPhotoById(photoId);
         // HttpHeaders headers = photoService.getCacheHeaders();
         if (photo == null) {
             throw new NoPhotoForProfileException("no photo");

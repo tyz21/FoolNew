@@ -1,6 +1,6 @@
 package com.example.toxicapplication.appUser.userPhoto.service;
 
-import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
+import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
 import com.example.toxicapplication.appUser.userPhoto.reposirory.UserPhotoRepository;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserRepository;
@@ -20,7 +20,7 @@ public class UserRatingService {
 
     @Transactional
     public double postRating(Long photoId, double rating) {
-        UserPhotoEntityDemo userPhotoEntity = userPhotoRepository.findById(photoId).get();
+        UserPhotoEntity userPhotoEntity = userPhotoRepository.findById(photoId).get();
 
         Integer countMark = userPhotoEntity.getCountMark();
         Double sumMark = userPhotoEntity.getSumMark();
@@ -52,7 +52,7 @@ public class UserRatingService {
 
         Long lastIdAddPhoto = profileUser.getAllIdPhotoUser().get(profileUser.getAllIdPhotoUser().size() - 1);
 
-        UserPhotoEntityDemo userPhotoEntity = userPhotoRepository.findById(lastIdAddPhoto).orElse(null);
+        UserPhotoEntity userPhotoEntity = userPhotoRepository.findById(lastIdAddPhoto).orElse(null);
 
         double ratingPhoto = Objects.requireNonNull(userPhotoEntity).getRatingPhoto();
         profileUser.setRatingUser(ratingPhoto);
@@ -76,7 +76,10 @@ public class UserRatingService {
             if (lastIdAddPhoto == 0) {
                 continue;
             }
-            UserPhotoEntityDemo userPhoto = userPhotoRepository.findById(lastIdAddPhoto).get();
+            if (userPhotoRepository.findById(lastIdAddPhoto).isEmpty()){
+                continue;
+            }
+                UserPhotoEntity userPhoto = userPhotoRepository.findById(lastIdAddPhoto).get();
             userPhoto.setTopPhoto(i + 1L);
 
             profileUserRepository.save(profile);

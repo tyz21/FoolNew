@@ -1,7 +1,7 @@
 package com.example.toxicapplication.appUser.dto.service;
 
 import com.example.toxicapplication.appUser.dto.SearchDTO;
-import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
+import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserRepository;
 import com.example.toxicapplication.appUser.userProfile.comporator.ProfileComparator;
@@ -50,13 +50,12 @@ public class SearchServiceDTO {
             SearchDTO searchDTO = new SearchDTO();
             searchDTO.setIdProfile(profileUserEntity.getId());
             searchDTO.setProfileName(profileUserEntity.getProfileName());
-            List<UserPhotoEntityDemo> userPhotos = profileUserEntity.getUserPhotos();
+            List<UserPhotoEntity> userPhotos = profileUserEntity.getUserPhotos();
             if (!userPhotos.isEmpty()) {
-                UserPhotoEntityDemo lastCirclePhoto = Collections.max(userPhotos, Comparator.comparing(UserPhotoEntityDemo::getDateCreated));
+                UserPhotoEntity lastCirclePhoto = Collections.max(userPhotos, Comparator.comparing(UserPhotoEntity::getDateCreated));
                 searchDTO.setIdPhotoCircle(lastCirclePhoto.getId());
                 searchDTO.setLastCirclePhoto(lastCirclePhoto.getPhotoCircle());
             }
-          //  searchDTO.setLastCirclePhoto(profileUserEntity.getUserPhotos().get(profileUserEntity.getUserPhotos().size() - 1).getPhotoCircle());
 
             return searchDTO;
         });

@@ -1,7 +1,7 @@
 package com.example.toxicapplication.appUser.dto.service;
 
 import com.example.toxicapplication.appUser.dto.RatingDTO;
-import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
+import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserRepository;
 import lombok.AllArgsConstructor;
@@ -18,10 +18,10 @@ public class RatingServiceDTO {
     private final ProfileUserRepository profileUserRepository;
     private final TransactionTemplate transactionTemplate;
 
-    public List<RatingDTO> getRandomRatingDTOs(long count) {
+    public List<RatingDTO> getRandomRatingDTOs(long count, long idProfile) {
         return transactionTemplate.execute(status -> {
             List<RatingDTO> randomRatingDTOs = new ArrayList<>();
-            List<ProfileUserEntity> randomUsers = provideRandomUsers(count);
+            List<ProfileUserEntity> randomUsers = provideRandomUsers(count, idProfile);
 
             for (ProfileUserEntity profileUserEntity : randomUsers) {
                 RatingDTO ratingDTO = new RatingDTO();
@@ -29,9 +29,9 @@ public class RatingServiceDTO {
                 ratingDTO.setRatingUser(profileUserEntity.getRatingUser());
                 ratingDTO.setTopUser(profileUserEntity.getTopUser());
                 ratingDTO.setIdProfile(profileUserEntity.getId());
-                List<UserPhotoEntityDemo> userPhotos = profileUserEntity.getUserPhotos();
+                List<UserPhotoEntity> userPhotos = profileUserEntity.getUserPhotos();
                 if (!userPhotos.isEmpty()) {
-                    UserPhotoEntityDemo lastRectanglePhoto = Collections.max(userPhotos, Comparator.comparing(UserPhotoEntityDemo::getDateCreated));
+                    UserPhotoEntity lastRectanglePhoto = Collections.max(userPhotos, Comparator.comparing(UserPhotoEntity::getDateCreated));
                     ratingDTO.setIdPhotoCircle(lastRectanglePhoto.getId());
                     ratingDTO.setPhotoRectangle(lastRectanglePhoto.getPhotoRectangle());
                     ratingDTO.setIdPhoto(lastRectanglePhoto.getId());
@@ -44,7 +44,7 @@ public class RatingServiceDTO {
         });
     }
 
-    public List<ProfileUserEntity> provideRandomUsers(long count) {
+    public List<ProfileUserEntity> provideRandomUsers(long count, long idProfile) {
         List<ProfileUserEntity> randomUsers = new ArrayList<>();
         long maxId = profileUserRepository.getMaxId();
         while (randomUsers.size() < count) {
@@ -53,12 +53,11 @@ public class RatingServiceDTO {
 
             if (randomUserOptional.isPresent()) {
                 ProfileUserEntity randomUser = randomUserOptional.get();
-                if (!randomUser.getUserPhotos().isEmpty()) {
+                if (!randomUser.getUserPhotos().isEmpty() && randomUser.getId() != idProfile ) {
                     randomUsers.add(randomUser);
                 }
             }
         }
-
         return randomUsers;
     }
 

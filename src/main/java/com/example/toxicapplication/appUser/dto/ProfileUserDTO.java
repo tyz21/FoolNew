@@ -2,8 +2,6 @@ package com.example.toxicapplication.appUser.dto;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data

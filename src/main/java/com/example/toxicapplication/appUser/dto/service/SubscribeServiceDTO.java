@@ -3,7 +3,7 @@ package com.example.toxicapplication.appUser.dto.service;
 import com.example.toxicapplication.appUser.dto.SubscribeDTO;
 import com.example.toxicapplication.appUser.subscribe.Subscribe;
 import com.example.toxicapplication.appUser.subscribe.SubscribeRepository;
-import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
+import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,11 +36,11 @@ public class SubscribeServiceDTO {
                 subscribeDTO.setIdProfile(profileUser.getId());
                 subscribeDTO.setProfileName(profileUser.getProfileName());
 
-                List<UserPhotoEntityDemo> userPhotos = profileUser.getUserPhotos();
-                userPhotos.sort(Comparator.comparing(UserPhotoEntityDemo::getDateCreated).reversed());
-                UserPhotoEntityDemo lastCirclePhoto = null;
+                List<UserPhotoEntity> userPhotos = profileUser.getUserPhotos();
+                userPhotos.sort(Comparator.comparing(UserPhotoEntity::getDateCreated).reversed());
+                UserPhotoEntity lastCirclePhoto = null;
                 if (!userPhotos.isEmpty()) {
-                    lastCirclePhoto = Collections.max(userPhotos, Comparator.comparing(UserPhotoEntityDemo::getDateCreated));
+                    lastCirclePhoto = Collections.max(userPhotos, Comparator.comparing(UserPhotoEntity::getDateCreated));
                     subscribeDTO.setIdPhotoCircle(lastCirclePhoto.getId());
                     subscribeDTO.setLastCirclePhoto(lastCirclePhoto.getPhotoCircle());
                 }

@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserPhotoEntityDemo implements Comparable<UserPhotoEntityDemo>{
+public class UserPhotoEntity implements Comparable<UserPhotoEntity>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -55,20 +55,20 @@ public class UserPhotoEntityDemo implements Comparable<UserPhotoEntityDemo>{
                 profileUser = new ProfileUserEntity(appUser);
                 appUser.setProfileUserEntity(profileUser);
             }
-            List<UserPhotoEntityDemo> userPhotos = profileUser.getUserPhotos();
+            List<UserPhotoEntity> userPhotos = profileUser.getUserPhotos();
             if (!userPhotos.contains(this)) {
                 userPhotos.add(this);
                 this.setProfileUserEntity(profileUser);
             }
         }
     }
-    public UserPhotoEntityDemo(AppUser appUser, ProfileUserEntity profileUserEntity) {
+    public UserPhotoEntity(AppUser appUser, ProfileUserEntity profileUserEntity) {
         this.appUser = appUser;
         this.profileUserEntity = profileUserEntity;
     }
 
     @Override
-    public int compareTo(UserPhotoEntityDemo other) {
+    public int compareTo(UserPhotoEntity other) {
         return this.dateCreated.compareTo(other.dateCreated);
     }
 }

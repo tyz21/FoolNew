@@ -2,7 +2,7 @@ package com.example.toxicapplication.appUser.dto.service;
 
 import com.example.toxicapplication.appUser.dto.ProfileUserDTO;
 import com.example.toxicapplication.appUser.dto.UserPhotoDTO;
-import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntityDemo;
+import com.example.toxicapplication.appUser.userPhoto.entity.UserPhotoEntity;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserEntity;
 import com.example.toxicapplication.appUser.userProfile.ProfileUserRepository;
 import lombok.AllArgsConstructor;
@@ -33,16 +33,17 @@ public class ProfileServiceDTO {
             profileUserDTO.setProfileName(profileUserEntity.getProfileName());
             profileUserDTO.setRatingUser(profileUserEntity.getRatingUser());
             profileUserDTO.setTopUser(profileUserEntity.getTopUser());
-            if (profileUserEntity.getUserPhotos() != null) {
-                List<UserPhotoEntityDemo> userPhotos = profileUserEntity.getUserPhotos();
-                userPhotos.sort(Comparator.comparing(UserPhotoEntityDemo::getDateCreated).reversed());
+            if (profileUserEntity.getUserPhotos().size() != 0) {
+                System.out.println(profileUserEntity.getUserPhotos().size());
+                List<UserPhotoEntity> userPhotos = profileUserEntity.getUserPhotos();
+                userPhotos.sort(Comparator.comparing(UserPhotoEntity::getDateCreated).reversed());
 
                 List<UserPhotoDTO> userPhotosDTO = new ArrayList<>();
-                UserPhotoEntityDemo lastCirclePhoto = Collections.max(userPhotos, Comparator.comparing(UserPhotoEntityDemo::getDateCreated));
+                UserPhotoEntity lastCirclePhoto = Collections.max(userPhotos, Comparator.comparing(UserPhotoEntity::getDateCreated));
                 profileUserDTO.setIdPhotoCircle(lastCirclePhoto.getId());
                 profileUserDTO.setLastCirclePhoto(lastCirclePhoto.getPhotoCircle());
 
-                for (UserPhotoEntityDemo userPhotoEntity : userPhotos) {
+                for (UserPhotoEntity userPhotoEntity : userPhotos) {
                     UserPhotoDTO userPhotoDTO = new UserPhotoDTO();
                     userPhotoDTO.setIdPhoto(userPhotoEntity.getId());
                     userPhotoDTO.setPhotoRectangle(userPhotoEntity.getPhotoRectangle());
@@ -57,9 +58,11 @@ public class ProfileServiceDTO {
                 profileUserDTO.setUserPhotos(userPhotosDTO);
 
                 return profileUserDTO;
-        } else {
-                return null;
             }
-        } );
+            else {
+                profileUserDTO.setUserPhotos(new ArrayList<>());
+                return profileUserDTO;
+            }
+        });
     }
 }
