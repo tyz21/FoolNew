@@ -48,7 +48,7 @@ public class RegistrationService {
 //        // Update the user's account with the new access token
 //        appUserService.updateAccessToken(request.getUserName(), newAccessToken);
 
-        String link = "toxicapplication-production.up.railway.app/api/v1/registration/confirm?token=" + token;
+        String link = "https://toxicapplication-production.up.railway.app/api/v1/registration/confirm?token=" + token;
         emailSender.send(
                 request.getEmail(),
                 buildEmail(request.getUserName(), link));
