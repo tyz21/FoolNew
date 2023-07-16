@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public class RegistrationController {
     private final RegistrationService registrationService;
 
-    @PostMapping
+    @PostMapping(produces = "application/json")
     public String register(@RequestBody RegistrationRequest request) {
         return registrationService.register(request);
     }
