@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class AppUserController {
     private final AppUserService appUserService;
     @GetMapping("id/{userName}")

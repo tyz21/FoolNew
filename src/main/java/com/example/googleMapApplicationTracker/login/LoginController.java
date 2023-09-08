@@ -19,8 +19,9 @@ public class LoginController {
 
     @GetMapping()
     public String login(@RequestParam String userName, @RequestParam String password) {
+
         try {
-            if(userName.isEmpty() || password.isEmpty()){
+            if (userName.isEmpty() || password.isEmpty()) {
                 return "userName or password is empty";
             }
 

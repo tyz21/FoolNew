@@ -22,15 +22,6 @@ public class AppUserService implements UserDetailsService {
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Override
-    public UserDetails loadUserByUsername(String userName)
-            throws UsernameNotFoundException {
-        return appUserRepository.findByUserName(userName)
-                .orElseThrow(() ->
-                        new UsernameNotFoundException(
-                                String.format(USER_NOT_FOUND_MSG, userName)));
-    }
-
     public String signUpUser(AppUser appUser) {
         boolean userExists = appUserRepository
                 .findByUserName(appUser.getUsername())
@@ -39,6 +30,7 @@ public class AppUserService implements UserDetailsService {
         if (userExists) {
             throw new IllegalStateException("this is user already taken");
         }
+
         String encodedPassword = bCryptPasswordEncoder
                 .encode(appUser.getPassword());
 
@@ -47,6 +39,15 @@ public class AppUserService implements UserDetailsService {
         appUserRepository.save(appUser);
 
         return UUID.randomUUID().toString();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String userName)
+            throws UsernameNotFoundException {
+        return appUserRepository.findByUserName(userName)
+                .orElseThrow(() ->
+                        new UsernameNotFoundException(
+                                String.format(USER_NOT_FOUND_MSG, userName)));
     }
     @Transactional(readOnly = true)
     public long getIdUser(String userName) {
