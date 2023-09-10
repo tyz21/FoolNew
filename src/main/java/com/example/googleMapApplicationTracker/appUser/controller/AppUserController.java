@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RequestMapping("/user")
 public class AppUserController {
+
     private final AppUserService appUserService;
     @GetMapping("id/{userName}")
     public long getIdUser(@PathVariable String userName) {

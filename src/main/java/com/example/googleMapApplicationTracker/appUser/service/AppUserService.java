@@ -30,7 +30,6 @@ public class AppUserService implements UserDetailsService {
         if (userExists) {
             throw new IllegalStateException("this is user already taken");
         }
-
         String encodedPassword = bCryptPasswordEncoder
                 .encode(appUser.getPassword());
 

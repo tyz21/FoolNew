@@ -19,11 +19,6 @@ import java.util.Collections;
 @Entity
 @AllArgsConstructor
 public class AppUser implements UserDetails {
-//    @SequenceGenerator(
-//            name = "student_sequence",
-//            sequenceName = "student_sequence",
-//            allocationSize = 1
-//    )
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,7 +27,6 @@ public class AppUser implements UserDetails {
     @NotNull
     private String userName;
     private String password;
-
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
 

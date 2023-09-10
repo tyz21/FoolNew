@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 public class RegistrationService {
     private final AppUserService appUserService;
     private final AppUserRepository appUserRepository;
-
     public String register(RegistrationRequest request) {
         if (appUserRepository.existsByUserName(request.getUserName())) {
             return "Username already exists";

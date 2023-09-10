@@ -1,5 +1,6 @@
 package com.example.googleMapApplicationTracker.login;
 
+import com.example.googleMapApplicationTracker.appUser.utility.ApiResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,19 +13,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("/api/v1/login")
+@AllArgsConstructor
 public class LoginController {
     private AuthenticationManager authenticationManager;
 
     @GetMapping()
-    public String login(@RequestParam String userName, @RequestParam String password) {
-
+    public ApiResponse<String> login(@RequestParam String userName, @RequestParam String password) {
         try {
             if (userName.isEmpty() || password.isEmpty()) {
-                return "userName or password is empty";
+                return new ApiResponse<>("userName or password is empty", true);
             }
-
             Authentication authentication = new UsernamePasswordAuthenticationToken(
                     userName,
                     password
@@ -32,14 +31,14 @@ public class LoginController {
 
             Authentication authenticated = authenticationManager.authenticate(authentication);
             if (!authenticated.isAuthenticated()) {
-                return "user not authenticated";
+                return new ApiResponse<>("user not authenticated", true);
             }
 
             SecurityContextHolder.getContext().setAuthentication(authenticated);
-            return "Login successful!";
+            return new ApiResponse<>("Success!", false);
 
         } catch (AuthenticationException e) {
-            return "check username or password";
+            return new ApiResponse<>("check username or password", true);
         }
     }
 }
