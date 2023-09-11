@@ -9,8 +9,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CoordinateRequest {
     private int id;
-    private String lat;
-    private String lon;
+    private String latitude;
+    private String longitude;
     private int ping;
 
 }
