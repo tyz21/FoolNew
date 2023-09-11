@@ -17,18 +17,14 @@ public class Coordinate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String latitude;
-    private String longitude;
+    private Double latitude;
+    private Double longitude;
     private int ping;
 
-    public Coordinate(String latitude, String longitude, int ping) {
+    public Coordinate(Double latitude, Double longitude, int ping) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.ping = ping;
     }
 
-    public Coordinate(Long id, String latitude) {
-        this.id = id;
-        this.latitude = latitude;
-    }
 }

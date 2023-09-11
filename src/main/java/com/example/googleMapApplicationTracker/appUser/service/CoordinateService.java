@@ -19,7 +19,7 @@ public class CoordinateService {
 
     @Transactional
     public ApiResponse<String> saveCoordinate(CoordinateRequest coordinateRequest) {
-        if (coordinateRequest.getLatitude().equals("") || coordinateRequest.getLongitude().equals("") || coordinateRequest.getPing() == 0) {
+        if (coordinateRequest.getLatitude() == 0.0 || coordinateRequest.getLongitude() == 0.0 || coordinateRequest.getPing() == 0) {
             return new ApiResponse<>("Exception: coordinate didn't saved", true);
         }
 
