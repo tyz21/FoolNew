@@ -25,19 +25,18 @@ public class ImageController {
         imageService.removePhoto(idPhoto);
     }
 
-     @PostMapping("/save/{id}")
-    public ApiResponse<String> saveImage(@PathVariable("id") Long id,
+     @PostMapping("/save")
+    public ApiResponse<String> saveImage(@AuthenticationPrincipal AppUser appUser,
                                          @RequestParam MultipartFile image) {
 
         try {
-            System.out.println("id");
-            System.out.println(id);
-            System.out.println(image);
+            System.out.println("user id" + appUser.getId());
+            System.out.println("image" + image);
         } catch (Exception e) {
             System.out.println("exception" + e);
         }
          System.out.println("error 1");
-        return imageService.saveImage(id, image);
+        return imageService.saveImage(appUser, image);
     }
     @RequestMapping(value = "/save", method = RequestMethod.OPTIONS)
     public ResponseEntity<?> handleOptionsRequest() {

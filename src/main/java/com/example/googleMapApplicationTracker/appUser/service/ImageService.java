@@ -31,10 +31,10 @@ public class ImageService {
         imageRepository.delete(image);
     }
 
-    public ApiResponse<String> saveImage(Long id, MultipartFile image) {
+    public ApiResponse<String> saveImage(AppUser appUser, MultipartFile image) {
         System.out.println("error 2");
-        var appUser = appUserRepository.findById(id).
-                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+//        var appUser = appUserRepository.findById(id).
+//                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         try {
             Image newImage = new Image();
             byte[] imageBytes = image.getBytes();
@@ -46,7 +46,7 @@ public class ImageService {
             return new ApiResponse<>("Success!", false, appUser.getId(), appUser.getUsername(), appUser.getImage().getImage());
         } catch (Exception e) {
             System.out.println("error 4");
-            return new ApiResponse<>(e.toString(), true, id, appUser.getUsername(), appUser.getImage().getImage());
+            return new ApiResponse<>(e.toString(), true, appUser.getId(), appUser.getUsername(), appUser.getImage().getImage());
         }
     }
     @Transactional(readOnly = true)
