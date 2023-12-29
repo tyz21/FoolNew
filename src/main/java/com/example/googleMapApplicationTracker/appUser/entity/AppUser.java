@@ -32,7 +32,6 @@ public class AppUser implements UserDetails {
 
     private Boolean locked = false;
     private Boolean enabled = true;
-
     @OneToOne
     private Image image;
 

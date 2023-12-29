@@ -16,7 +16,7 @@ public class RegistrationController {
     private final RegistrationService registrationService;
     private final AppUserRepository appUserRepository;
     @CrossOrigin
-    @PostMapping("/registration")
+    @PostMapping()
     public ApiResponse<String> register(@RequestBody RegistrationRequest request) {
          registrationService.register(request);
 
