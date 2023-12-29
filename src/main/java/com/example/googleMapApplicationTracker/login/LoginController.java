@@ -14,7 +14,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/v1/login")
-@CrossOrigin(origins = "https://gamefool.gamefi.codes/")
 @AllArgsConstructor
 public class LoginController {
     private AuthenticationManager authenticationManager;

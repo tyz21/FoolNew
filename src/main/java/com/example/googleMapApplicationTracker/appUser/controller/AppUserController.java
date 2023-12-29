@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/user")
-@CrossOrigin(origins = "https://gamefool.gamefi.codes/")
 public class AppUserController {
 
     private final AppUserService appUserService;

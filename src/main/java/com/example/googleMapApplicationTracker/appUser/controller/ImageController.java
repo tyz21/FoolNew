@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/image")
-@CrossOrigin(origins = "https://gamefool.gamefi.codes/")
 public class ImageController {
 
     private final ImageService imageService;
