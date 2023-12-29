@@ -15,7 +15,7 @@ public class CompressImage {
 
         ByteArrayOutputStream compressedStream = new ByteArrayOutputStream();
 
-        ImageWriter writer = ImageIO.getImageWritersByFormatName("png").next();
+        ImageWriter writer = ImageIO.getImageWritersByFormatName("jpeg").next();
 
         writer.setOutput(ImageIO.createImageOutputStream(compressedStream));
         ImageWriteParam param = writer.getDefaultWriteParam();
