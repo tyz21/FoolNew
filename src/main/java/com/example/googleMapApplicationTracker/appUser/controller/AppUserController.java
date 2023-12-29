@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class AppUserController {
 
     private final AppUserService appUserService;
-    @CrossOrigin
+
     @GetMapping("id/{userName}")
     public long getIdUser(@PathVariable String userName) {
         return appUserService.getIdUser(userName);

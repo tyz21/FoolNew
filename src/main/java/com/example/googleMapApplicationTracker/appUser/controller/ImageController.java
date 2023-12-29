@@ -17,19 +17,17 @@ public class ImageController {
     public ImageController(ImageService imageService) {
         this.imageService = imageService;
     }
-    @CrossOrigin
     @DeleteMapping("/delete/{idPhoto}")
     public void deletePhoto(@PathVariable Long idPhoto) {
         imageService.removePhoto(idPhoto);
     }
-    //@CrossOrigin("https://gamefool.gamefi.codes/")
-    @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST})
-    @PostMapping("/save")
+
+     @PostMapping("/save")
     public ApiResponse<String> saveImage(@AuthenticationPrincipal AppUser appUser,
                                          @RequestParam("image") MultipartFile image) {
         return imageService.saveImage(appUser, image);
     }
-    @CrossOrigin
+
     @GetMapping("/{userId}")
     public ApiResponse<String> getImageByAppUserId(@PathVariable("userId") Long userId) {
         return imageService.getImageByAppUserId(userId);

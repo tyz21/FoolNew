@@ -19,7 +19,6 @@ public class LoginController {
     private AuthenticationManager authenticationManager;
     private AppUserRepository appUserRepository;
 
-    @CrossOrigin
     @GetMapping()
     public ApiResponse<String> login(@RequestParam String userName, @RequestParam String password) {
         try {

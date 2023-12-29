@@ -15,7 +15,6 @@ import org.springframework.web.server.ResponseStatusException;
 public class RegistrationController {
     private final RegistrationService registrationService;
     private final AppUserRepository appUserRepository;
-    @CrossOrigin
     @PostMapping()
     public ApiResponse<String> register(@RequestBody RegistrationRequest request) {
          registrationService.register(request);
