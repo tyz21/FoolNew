@@ -30,6 +30,7 @@ public class ImageController {
                                          @RequestBody MultipartFile image) {
 
         try {
+            System.out.println("id");
             System.out.println(id);
             System.out.println(image);
         } catch (Exception e) {
