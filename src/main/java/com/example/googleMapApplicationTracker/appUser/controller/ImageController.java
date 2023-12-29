@@ -27,7 +27,7 @@ public class ImageController {
 
      @PostMapping("/save/{id}")
     public ApiResponse<String> saveImage(@PathVariable("id") Long id,
-                                         @RequestBody MultipartFile image) {
+                                         @RequestParam MultipartFile image) {
 
         try {
             System.out.println("id");
