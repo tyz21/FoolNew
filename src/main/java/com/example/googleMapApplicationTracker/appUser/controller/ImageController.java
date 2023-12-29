@@ -28,6 +28,7 @@ public class ImageController {
      @PostMapping("/save")
     public ApiResponse<String> saveImage(@AuthenticationPrincipal AppUser appUser,
                                          @RequestBody MultipartFile image) {
+         System.out.println("error 1");
         return imageService.saveImage(appUser, image);
     }
     @RequestMapping(value = "/save", method = RequestMethod.OPTIONS)

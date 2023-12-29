@@ -32,6 +32,7 @@ public class ImageService {
     }
 
     public ApiResponse<String> saveImage(AppUser appUser, MultipartFile image) {
+        System.out.println("error 2");
         try {
             Image newImage = new Image();
             byte[] imageBytes = image.getBytes();
@@ -39,8 +40,10 @@ public class ImageService {
             appUser.setImage(newImage);
             imageRepository.save(newImage);
             appUserRepository.save(appUser);
+            System.out.println("error 3");
             return new ApiResponse<>("Success!", false, appUser.getId(), appUser.getUsername(), appUser.getImage().getImage());
         } catch (Exception e) {
+            System.out.println("error 4");
             return new ApiResponse<>(e.toString(), true, appUser.getId(), appUser.getUsername(), appUser.getImage().getImage());
         }
     }

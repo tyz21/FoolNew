@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class CompressImage {
     public static byte[] compressImage(byte[] imageBytes) throws IOException {
+        System.out.println("error 5");
         BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageBytes));
 
         ByteArrayOutputStream compressedStream = new ByteArrayOutputStream();
