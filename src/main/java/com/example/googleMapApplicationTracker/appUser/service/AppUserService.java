@@ -22,7 +22,7 @@ public class AppUserService implements UserDetailsService {
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public String signUpUser(AppUser appUser) {
+    public void signUpUser(AppUser appUser) {
         boolean userExists = appUserRepository
                 .findByUserName(appUser.getUsername())
                 .isPresent();
@@ -37,7 +37,6 @@ public class AppUserService implements UserDetailsService {
 
         appUserRepository.save(appUser);
 
-        return UUID.randomUUID().toString();
     }
 
     @Override

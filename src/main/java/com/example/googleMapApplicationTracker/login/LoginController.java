@@ -33,10 +33,10 @@ public class LoginController {
             }
 
             SecurityContextHolder.getContext().setAuthentication(authenticated);
-            return new ApiResponse<>("Success!", false);
 
         } catch (AuthenticationException e) {
             return new ApiResponse<>("check username or password", true);
         }
+        return null;
     }
 }
