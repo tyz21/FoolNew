@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
+@CrossOrigin(origins = "https://gamefool.gamefi.codes")
 @RequestMapping("/image")
 public class ImageController {
-
     private final ImageService imageService;
     @Autowired
     public ImageController(ImageService imageService) {

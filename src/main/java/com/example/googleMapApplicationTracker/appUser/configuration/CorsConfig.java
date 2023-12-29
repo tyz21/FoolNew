@@ -19,6 +19,9 @@ public class CorsConfig {
                 registry.addMapping("/api/v1/login")
                         .allowedOrigins("https://gamefool.gamefi.codes")
                         .allowedMethods("GET");
+                registry.addMapping("/image/save")
+                        .allowedOrigins("https://gamefool.gamefi.codes")
+                        .allowedMethods("POST");
             }
         };
     }
