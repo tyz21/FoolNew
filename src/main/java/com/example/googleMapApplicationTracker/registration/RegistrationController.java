@@ -11,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 @Slf4j
 @RestController
 @RequestMapping(path = "api/v1/registration", produces = "application/json")
-@CrossOrigin(origins = "https://gamefool.gamefi.codes/")
+@CrossOrigin(origins = "*")
 @AllArgsConstructor
 public class RegistrationController {
     private final RegistrationService registrationService;

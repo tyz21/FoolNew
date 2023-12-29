@@ -3,8 +3,9 @@ package com.example.googleMapApplicationTracker.appUser.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.cors.reactive.CorsWebFilter;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.util.pattern.PathPatternParser;
@@ -34,4 +35,23 @@ public class ApplicationConfiguration {
 //
 //    };
 //}
+@Bean
+public CorsFilter corsFilter() {
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
+    CorsConfiguration config = new CorsConfiguration();
+    config.setAllowCredentials(true); // Разрешить отправку cookies и authentication headers
+    config.addAllowedOrigin("https://gamefool.gamefi.codes/"); // Замените на домен вашего WebGL приложения
+    config.addAllowedHeader("*"); // Разрешить все заголовки
+    config.addAllowedMethod("OPTIONS"); // Разрешить предварительные запросы CORS
+    config.addAllowedMethod("GET"); // Разрешить GET запросы
+    config.addAllowedMethod("POST"); // Разрешить POST запросы
+    config.addAllowedMethod("PUT"); // Разрешить PUT запросы
+    config.addAllowedMethod("DELETE"); // Разрешить DELETE запросы
+
+    // Применить настройки CORS для всех путей
+    source.registerCorsConfiguration("/**", config);
+
+    return new CorsFilter(source);
+}
 }
