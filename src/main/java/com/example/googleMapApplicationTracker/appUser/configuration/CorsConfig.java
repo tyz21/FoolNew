@@ -13,18 +13,11 @@ public class CorsConfig {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/v1/registration")
+                registry.addMapping("/**")
                         .allowedOrigins("https://gamefool.gamefi.codes")
-                        .allowedMethods("POST")
-                        .allowedHeaders("Origin", "Content-Type", "Accept");;
-                registry.addMapping("/api/v1/login")
-                        .allowedOrigins("https://gamefool.gamefi.codes")
-                        .allowedMethods("GET")
-                        .allowedHeaders("Origin", "Content-Type", "Accept");;
-                registry.addMapping("/image/save")
-                        .allowedOrigins("https://gamefool.gamefi.codes")
-                        .allowedMethods("POST")
-                        .allowedHeaders("Origin", "Content-Type", "Accept");;
+                        .allowedMethods("*")
+                        .allowedHeaders("*").maxAge(3600);;
+
             }
         };
 
