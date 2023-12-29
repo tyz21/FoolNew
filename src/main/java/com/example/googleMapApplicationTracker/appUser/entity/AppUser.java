@@ -33,6 +33,9 @@ public class AppUser implements UserDetails {
     private Boolean locked = false;
     private Boolean enabled = true;
 
+    @OneToOne
+    private Image image;
+
     public AppUser(String userName, String password, AppUserRole appUserRole) {
         this.userName = userName;
         this.password = password;
