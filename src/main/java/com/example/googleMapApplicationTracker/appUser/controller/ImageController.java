@@ -26,17 +26,17 @@ public class ImageController {
     }
 
      @PostMapping("/save")
-    public ApiResponse<String> saveImage(@AuthenticationPrincipal AppUser appUser,
+    public ApiResponse<String> saveImage(@RequestBody Long id,
                                          @RequestBody MultipartFile image) {
 
         try {
-            System.out.println(appUser);
+            System.out.println(id);
             System.out.println(image);
         } catch (Exception e) {
             System.out.println("exception" + e);
         }
          System.out.println("error 1");
-        return imageService.saveImage(appUser, image);
+        return imageService.saveImage(id, image);
     }
     @RequestMapping(value = "/save", method = RequestMethod.OPTIONS)
     public ResponseEntity<?> handleOptionsRequest() {
