@@ -10,9 +10,11 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.util.pattern.PathPatternParser;
 
+import javax.servlet.Filter;
+
 @Configuration
 public class ApplicationConfiguration {
-//    @Bean
+    //    @Bean
 //    public CorsWebFilter corsWebFilter() {
 //        CorsConfiguration config = new CorsConfiguration();
 //        config.setAllowCredentials(true); // you may not need this
@@ -35,23 +37,27 @@ public class ApplicationConfiguration {
 //
 //    };
 //}
-@Bean
-public CorsFilter corsFilter() {
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
-    CorsConfiguration config = new CorsConfiguration();
-    config.setAllowCredentials(true); // Разрешить отправку cookies и authentication headers
-    config.addAllowedOrigin("https://gamefool.gamefi.codes/"); // Замените на домен вашего WebGL приложения
-    config.addAllowedHeader("*"); // Разрешить все заголовки
-    config.addAllowedMethod("OPTIONS"); // Разрешить предварительные запросы CORS
-    config.addAllowedMethod("GET"); // Разрешить GET запросы
-    config.addAllowedMethod("POST"); // Разрешить POST запросы
-    config.addAllowedMethod("PUT"); // Разрешить PUT запросы
-    config.addAllowedMethod("DELETE"); // Разрешить DELETE запросы
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true); // Разрешить отправку cookies и authentication headers
+        config.addAllowedOrigin("https://gamefool.gamefi.codes/"); // Замените на домен вашего WebGL приложения
+        config.addAllowedHeader("*"); // Разрешить все заголовки
+        config.addAllowedMethod("OPTIONS"); // Разрешить предварительные запросы CORS
+        config.addAllowedMethod("GET"); // Разрешить GET запросы
+        config.addAllowedMethod("POST"); // Разрешить POST запросы
+        config.addAllowedMethod("PUT"); // Разрешить PUT запросы
+        config.addAllowedMethod("DELETE"); // Разрешить DELETE запросы
 
-    // Применить настройки CORS для всех путей
-    source.registerCorsConfiguration("/**", config);
+        source.registerCorsConfiguration("/**", config);
 
-    return new CorsFilter(source);
-}
+        return new CorsFilter(source);
+    }
+
+//    @Bean
+//    public Filter corsFilter() {
+//        return new CorsFilter();
+//    }
 }
