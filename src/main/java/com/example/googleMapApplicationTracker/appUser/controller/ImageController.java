@@ -26,7 +26,7 @@ public class ImageController {
 
      @PostMapping("/save")
     public ApiResponse<String> saveImage(@AuthenticationPrincipal AppUser appUser,
-                                         @RequestParam("image") MultipartFile image) {
+                                         @RequestBody MultipartFile image) {
         return imageService.saveImage(appUser, image);
     }
     @RequestMapping(value = "/save", method = RequestMethod.OPTIONS)
