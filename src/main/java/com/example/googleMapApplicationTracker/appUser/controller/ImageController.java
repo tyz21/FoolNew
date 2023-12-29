@@ -32,12 +32,11 @@ public class ImageController {
         try {
             System.out.println("user id" + appUser.getId());
             System.out.println("image" + image);
-            return imageService.saveImage(appUser, image);
         } catch (Exception e) {
-            return new ApiResponse<>("failed", false);
+            System.out.println("exception" + e);
         }
-         //System.out.println("error 1");
-       // return imageService.saveImage(appUser, image);
+         System.out.println("error 1");
+        return imageService.saveImage(appUser, image);
     }
     @RequestMapping(value = "/save", method = RequestMethod.OPTIONS)
     public ResponseEntity<?> handleOptionsRequest() {
