@@ -25,8 +25,8 @@ public class ImageController {
         imageService.removePhoto(idPhoto);
     }
 
-     @PostMapping("/save")
-    public ApiResponse<String> saveImage(@RequestBody Long id,
+     @PostMapping("/save/{id}")
+    public ApiResponse<String> saveImage(@PathVariable("id") Long id,
                                          @RequestBody MultipartFile image) {
 
         try {
