@@ -23,7 +23,7 @@ public class ImageController {
         imageService.removePhoto(idPhoto);
     }
     //@CrossOrigin("https://gamefool.gamefi.codes/")
-    @CrossOrigin(origins = "https://foolnew-production.up.railway.app/", methods = {RequestMethod.GET, RequestMethod.POST})
+    @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST})
     @PostMapping("/save")
     public ApiResponse<String> saveImage(@AuthenticationPrincipal AppUser appUser,
                                          @RequestParam("image") MultipartFile image) {

@@ -13,7 +13,7 @@ public class ApplicationConfiguration {
     public CorsWebFilter corsWebFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true); // you may not need this
-        config.addAllowedOrigin("https://foolnew-production.up.railway.app/"); // or specify your frontend's URL for security
+        config.addAllowedOrigin("*"); // or specify your frontend's URL for security
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
 
