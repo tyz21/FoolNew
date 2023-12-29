@@ -28,6 +28,13 @@ public class ImageController {
      @PostMapping("/save")
     public ApiResponse<String> saveImage(@AuthenticationPrincipal AppUser appUser,
                                          @RequestBody MultipartFile image) {
+
+        try {
+            System.out.println(appUser);
+            System.out.println(image);
+        } catch (Exception e) {
+            System.out.println("exception" + e);
+        }
          System.out.println("error 1");
         return imageService.saveImage(appUser, image);
     }
