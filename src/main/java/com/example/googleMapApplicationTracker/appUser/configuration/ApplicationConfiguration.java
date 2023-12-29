@@ -24,14 +24,14 @@ public class ApplicationConfiguration {
 //
 //        return new CorsWebFilter(source);
 //    }
-@Bean
-public WebMvcConfigurer configure() {
-    return new WebMvcConfigurer() {
-        @Override
-        public void addCorsMappings(CorsRegistry registry) {
-            registry.addMapping("/*").allowedOrigins("https://gamefool.gamefi.codes/");
-        }
-
-    };
-}
+//@Bean
+//public WebMvcConfigurer configure() {
+//    return new WebMvcConfigurer() {
+//        @Override
+//        public void addCorsMappings(CorsRegistry registry) {
+//            registry.addMapping("/*").allowedOrigins("https://gamefool.gamefi.codes/");
+//        }
+//
+//    };
+//}
 }
