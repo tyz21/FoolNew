@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class RegistrationController {
     private final RegistrationService registrationService;
-
+    @CrossOrigin
     @PostMapping()
     public ApiResponse<String> register(@RequestBody RegistrationRequest request) {
         String registrationResult = registrationService.register(request);

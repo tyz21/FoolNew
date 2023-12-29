@@ -2,10 +2,7 @@ package com.example.googleMapApplicationTracker.appUser.controller;
 
 import com.example.googleMapApplicationTracker.appUser.service.AppUserService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -13,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AppUserController {
 
     private final AppUserService appUserService;
+    @CrossOrigin
     @GetMapping("id/{userName}")
     public long getIdUser(@PathVariable String userName) {
         return appUserService.getIdUser(userName);
