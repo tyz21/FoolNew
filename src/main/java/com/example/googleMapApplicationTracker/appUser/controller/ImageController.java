@@ -22,7 +22,7 @@ public class ImageController {
     public void deletePhoto(@PathVariable Long idPhoto) {
         imageService.removePhoto(idPhoto);
     }
-    @CrossOrigin
+    @CrossOrigin("https://gamefool.gamefi.codes/")
     @PostMapping("/save")
     public ApiResponse<String> saveImage(@AuthenticationPrincipal AppUser appUser,
                                          @RequestParam("image") MultipartFile image) {
