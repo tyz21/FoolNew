@@ -20,17 +20,10 @@ public class RegistrationController {
     public ApiResponse<String> register(@RequestBody RegistrationRequest request) {
          registrationService.register(request);
 
-        var existsUser = appUserRepository.findByUserName(request.getUserName()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
-        );
-
-        if(request.getUserName().equals("") || request.getPassword().equals("")){
+        if (request.getUserName().equals("") || request.getPassword().equals("")){
             return new ApiResponse<>("Exception: username or password is null", true);
         }
 
-//        if ("Username already exists".equals(registrationResult)) {
-//            return new ApiResponse<>("Exception: " + registrationResult, true);
-//        }
-        return new ApiResponse<>("Success!", false, existsUser.getId(), existsUser.getUsername(), null);
+        return new ApiResponse<>("Success!", false, 0, request.getUserName(), null);
     }
 }
