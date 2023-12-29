@@ -10,13 +10,13 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @RestController
-@RequestMapping(path = "api/v1/registration", produces = "application/json")
+@RequestMapping(path = "api/v1", produces = "application/json")
 @AllArgsConstructor
 public class RegistrationController {
     private final RegistrationService registrationService;
     private final AppUserRepository appUserRepository;
     @CrossOrigin
-    @PostMapping()
+    @PostMapping("/registration")
     public ApiResponse<String> register(@RequestBody RegistrationRequest request) {
          registrationService.register(request);
 
