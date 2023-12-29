@@ -13,7 +13,7 @@ public class ApplicationConfiguration {
     public CorsWebFilter corsWebFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true); // you may not need this
-        config.addAllowedOrigin("*"); // or specify your frontend's URL for security
+        config.addAllowedOrigin("https://gamefool.gamefi.codes/"); // or specify your frontend's URL for security
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
 
