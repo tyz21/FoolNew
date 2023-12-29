@@ -27,7 +27,7 @@ public class ImageController {
 
      @PostMapping("/save")
     public ApiResponse<String> saveImage(@AuthenticationPrincipal AppUser appUser,
-                                         @RequestParam MultipartFile image) {
+                                         @RequestBody MultipartFile image) {
 
         try {
             System.out.println("user id" + appUser.getId());
