@@ -15,14 +15,18 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/v1/registration")
                         .allowedOrigins("https://gamefool.gamefi.codes")
-                        .allowedMethods("POST");
+                        .allowedMethods("POST")
+                        .allowedHeaders("Origin", "Content-Type", "Accept");;
                 registry.addMapping("/api/v1/login")
                         .allowedOrigins("https://gamefool.gamefi.codes")
-                        .allowedMethods("GET");
+                        .allowedMethods("GET")
+                        .allowedHeaders("Origin", "Content-Type", "Accept");;
                 registry.addMapping("/image/save")
                         .allowedOrigins("https://gamefool.gamefi.codes")
-                        .allowedMethods("POST");
+                        .allowedMethods("POST")
+                        .allowedHeaders("Origin", "Content-Type", "Accept");;
             }
         };
+
     }
 }

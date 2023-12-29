@@ -4,6 +4,7 @@ import com.example.googleMapApplicationTracker.appUser.entity.AppUser;
 import com.example.googleMapApplicationTracker.appUser.service.ImageService;
 import com.example.googleMapApplicationTracker.appUser.utility.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -31,7 +32,12 @@ public class ImageController {
     }
     @RequestMapping(value = "/save", method = RequestMethod.OPTIONS)
     public ResponseEntity<?> handleOptionsRequest() {
-        return ResponseEntity.ok().allow(HttpMethod.POST).build();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Access-Control-Allow-Origin", "https://gamefool.gamefi.codes");
+        headers.add("Access-Control-Allow-Methods", "POST");
+        headers.add("Access-Control-Allow-Headers", "Content-Type");
+
+        return ResponseEntity.ok().headers(headers).build();
     }
     @GetMapping("/{userId}")
     public ApiResponse<String> getImageByAppUserId(@PathVariable("userId") Long userId) {
