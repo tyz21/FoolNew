@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -174,8 +175,9 @@ public class ImageController {
 //
 //        return ResponseEntity.ok().headers(headers).build();
 //    }
+    @Transactional(readOnly = true)
     @ResponseBody
-    @RequestMapping(value = "/{userId}", headers = "Content-Type= multipart/form-data", method = RequestMethod.GET)
+    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public ApiResponse<String> getImageByAppUserId(@PathVariable("userId") Long userId) {
         return imageService.getImageByAppUserId(userId);
     }

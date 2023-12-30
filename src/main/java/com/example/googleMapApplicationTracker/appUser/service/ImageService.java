@@ -83,6 +83,8 @@ public class ImageService {
         try {
             var image = imageRepository.findById(userId)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            System.out.println("image null" + image);
+            System.out.println("image byte " + image.getImage());
             return new ApiResponse<>("Success!", false, 0, null, image.getImage());
         } catch (Exception e) {
             return new ApiResponse<>(e.toString(), true);
