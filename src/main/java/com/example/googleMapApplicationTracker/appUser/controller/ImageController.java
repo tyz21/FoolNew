@@ -92,27 +92,49 @@ public class ImageController {
 //    //    }
 //    }
 
+    @ResponseBody
+    @RequestMapping(value = "/save", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST)
 
-    @PostMapping("/image/save")
-    public String uploadImage(@RequestParam("file") MultipartFile file) {
-
-        if (file.isEmpty()) {
-            return "Файл не передан";
+    public String upload(
+                         @RequestParam(value = "file", required = true) MultipartFile file)
+//@RequestParam ()CommonsMultipartFile[] fileUpload
+    {
+        System.out.println(file);
+        // @RequestMapping(value="/newDocument", , method = RequestMethod.POST)
+        if (!file.isEmpty()) {
+            try {
+                byte[] fileContent = file.getBytes();
+                System.out.println("fileContent" + fileContent);
+                //fileSystemHandler.create(123, fileContent);
+                return "You successfully uploaded !";
+            } catch (Exception e) {
+                return "You failed to upload   => " + e.getMessage();
+            }
+        } else {
+            return "You failed to upload " + " because the file was empty.";
         }
-        try {
-            // Получение имени файла
-            String fileName = file.getOriginalFilename();
-            System.out.println("fileNAme work" + fileName);
+    }
 
-            // Сохранение файла на сервере
-           // file.transferTo(new java.io.File(SAVE_DIR + fileName));
-
-            return "Файл успешно загружен: " + fileName;
-        } catch (Exception e) {
-            return "Ошибка загрузки: " + e.getMessage();
-        }
-
-}
+//    @PostMapping("/image/save")
+//    public String uploadImage(@RequestParam("file") MultipartFile file) {
+//
+//        if (file.isEmpty()) {
+//            return "Файл не передан";
+//        }
+//        try {
+//            // Получение имени файла
+//            String fileName = file.getOriginalFilename();
+//            System.out.println("fileNAme work" + fileName);
+//
+//            // Сохранение файла на сервере
+//           // file.transferTo(new java.io.File(SAVE_DIR + fileName));
+//
+//            return "Файл успешно загружен: " + fileName;
+//        } catch (Exception e) {
+//            return "Ошибка загрузки: " + e.getMessage();
+//        }
+//
+//}
     private String addPadding(String base64Image) {
         int padding = 4 - base64Image.length() % 4;
         return base64Image + "=".repeat(padding);
