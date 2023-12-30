@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -177,8 +178,8 @@ public class ImageController {
 //    }
     @Transactional(readOnly = true)
     @ResponseBody
-    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public ApiResponse<String> getImageByAppUserId(@PathVariable("userId") Long userId) {
-        return imageService.getImageByAppUserId(userId);
+    @RequestMapping(value = "/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResponse<String> getImageByAppUserId(@RequestParam Long id) {
+        return imageService.getImageByAppUserId(id);
     }
 }
