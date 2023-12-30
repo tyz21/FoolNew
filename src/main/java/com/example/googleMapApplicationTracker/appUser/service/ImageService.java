@@ -81,9 +81,9 @@ public class ImageService {
     @Transactional(readOnly = true)
     public ApiResponse<String> getImageByAppUserId(Long userId) {
         try {
-            var appUser = appUserRepository.findById(userId)
+            var image = imageRepository.findById(userId)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-            return new ApiResponse<>("Success!", false, appUser.getId(), appUser.getUsername(), appUser.getImage().getImage());
+            return new ApiResponse<>("Success!", false, 0, null, image.getImage());
         } catch (Exception e) {
             return new ApiResponse<>(e.toString(), true);
         }

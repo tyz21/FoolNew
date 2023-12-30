@@ -99,7 +99,7 @@ public class ImageController {
 
     @ResponseBody
     @RequestMapping(value = "/save", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST)
-    public String upload(@AuthenticationPrincipal AppUser appUser,
+    public String upload(
             @RequestParam(value = "file", required = true) MultipartFile file)
 //@RequestParam ()CommonsMultipartFile[] fileUpload
     {
@@ -107,8 +107,6 @@ public class ImageController {
         System.out.println(file);
         Image newImage = new Image();
         try {
-            appUser.setImage(newImage);
-            appUserRepository.save(appUser);
             newImage.setImage(file.getBytes());
             imageRepository.save(newImage);
         } catch (IOException e) {
