@@ -174,7 +174,8 @@ public class ImageController {
 //
 //        return ResponseEntity.ok().headers(headers).build();
 //    }
-    @GetMapping("/{userId}")
+    @ResponseBody
+    @RequestMapping(value = "/{userId}", headers = "Content-Type= multipart/form-data", method = RequestMethod.GET)
     public ApiResponse<String> getImageByAppUserId(@PathVariable("userId") Long userId) {
         return imageService.getImageByAppUserId(userId);
     }
