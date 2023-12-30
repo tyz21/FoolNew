@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import java.util.Map;
 public class ImageController {
     private final ImageService imageService;
     private final ImageRepository imageRepository;
+    private static final String SAVE_DIR = "/";
 
     @Autowired
     public ImageController(ImageService imageService, ImageRepository imageRepository) {
@@ -59,36 +61,58 @@ public class ImageController {
 //        }
 //    }
 
-    @PostMapping("/save")
-    public ApiResponse<String> saveImage( @RequestBody String base64Image) throws JsonProcessingException {
-      //  try {
-        System.out.println("image :" + base64Image);
-            if (base64Image == null || base64Image.isEmpty()) {
-                return new ApiResponse<>("Base64 image data is missing or empty.", true);
-            }
-      //  System.out.println("userNew :" + appUser.getUsername() + appUser.getId());
+//    @PostMapping("/save")
+//    public ApiResponse<String> saveImage( @RequestBody String base64Image) throws JsonProcessingException {
+//      //  try {
+//        System.out.println("image :" + base64Image);
+//            if (base64Image == null || base64Image.isEmpty()) {
+//                return new ApiResponse<>("Base64 image data is missing or empty.", true);
+//            }
+//      //  System.out.println("userNew :" + appUser.getUsername() + appUser.getId());
+//
+//            // Parse the base64Image as a JSON object
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            JsonNode jsonNode = objectMapper.readTree(base64Image);
+//
+//            // Extract the JSON result from the parsed object
+//            String jsonResult = jsonNode.toString();
+//
+//            System.out.println("result :" + jsonResult);
+//
+//            String trimmedBase64Data = jsonResult.substring(16, jsonResult.length() - 2);
+//            // You may want to log the received JSON result for debugging
+//            // logger.info("Received JSON result: {}", jsonResult);
+//
+//            return imageService.saveImage( trimmedBase64Data);
+//     //   } catch (Exception e) {
+//            // Log the exception for debugging purposes
+//            // logger.error("Error saving image: {}", e.getMessage(), e);
+//
+//          //  return new ApiResponse<>("Failed to save image.", true);
+//    //    }
+//    }
 
-            // Parse the base64Image as a JSON object
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(base64Image);
 
-            // Extract the JSON result from the parsed object
-            String jsonResult = jsonNode.toString();
+    @PostMapping("/image/save")
+    public String uploadImage(@RequestParam("file") MultipartFile file) {
 
-            System.out.println("result :" + jsonResult);
+        if (file.isEmpty()) {
+            return "Файл не передан";
+        }
+        try {
+            // Получение имени файла
+            String fileName = file.getOriginalFilename();
+            System.out.println("fileNAme work" + fileName);
 
-            String trimmedBase64Data = jsonResult.substring(16, jsonResult.length() - 2);
-            // You may want to log the received JSON result for debugging
-            // logger.info("Received JSON result: {}", jsonResult);
+            // Сохранение файла на сервере
+           // file.transferTo(new java.io.File(SAVE_DIR + fileName));
 
-            return imageService.saveImage( trimmedBase64Data);
-     //   } catch (Exception e) {
-            // Log the exception for debugging purposes
-            // logger.error("Error saving image: {}", e.getMessage(), e);
+            return "Файл успешно загружен: " + fileName;
+        } catch (Exception e) {
+            return "Ошибка загрузки: " + e.getMessage();
+        }
 
-          //  return new ApiResponse<>("Failed to save image.", true);
-    //    }
-    }
+}
     private String addPadding(String base64Image) {
         int padding = 4 - base64Image.length() % 4;
         return base64Image + "=".repeat(padding);
