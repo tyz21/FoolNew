@@ -96,7 +96,6 @@ public class ImageController {
 
     @ResponseBody
     @RequestMapping(value = "/save", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST)
-
     public String upload(
                          @RequestParam(value = "file", required = true) MultipartFile file)
 //@RequestParam ()CommonsMultipartFile[] fileUpload
