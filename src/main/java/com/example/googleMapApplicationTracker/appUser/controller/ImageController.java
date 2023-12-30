@@ -2,6 +2,7 @@ package com.example.googleMapApplicationTracker.appUser.controller;
 
 import com.example.googleMapApplicationTracker.appUser.entity.AppUser;
 import com.example.googleMapApplicationTracker.appUser.entity.Image;
+import com.example.googleMapApplicationTracker.appUser.repository.AppUserRepository;
 import com.example.googleMapApplicationTracker.appUser.repository.ImageRepository;
 import com.example.googleMapApplicationTracker.appUser.service.ImageService;
 import com.example.googleMapApplicationTracker.appUser.utility.ApiResponse;
@@ -23,12 +24,14 @@ import java.util.Map;
 public class ImageController {
     private final ImageService imageService;
     private final ImageRepository imageRepository;
+    private final AppUserRepository appUserRepository;
     private static final String SAVE_DIR = "/";
 
     @Autowired
-    public ImageController(ImageService imageService, ImageRepository imageRepository) {
+    public ImageController(ImageService imageService, ImageRepository imageRepository, AppUserRepository appUserRepository) {
         this.imageService = imageService;
         this.imageRepository = imageRepository;
+        this.appUserRepository = appUserRepository;
     }
 
     @DeleteMapping("/delete/{idPhoto}")
@@ -96,13 +99,16 @@ public class ImageController {
 
     @ResponseBody
     @RequestMapping(value = "/save", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST)
-    public String upload(
-                         @RequestParam(value = "file", required = true) MultipartFile file)
+    public String upload(@AuthenticationPrincipal AppUser appUser,
+            @RequestParam(value = "file", required = true) MultipartFile file)
 //@RequestParam ()CommonsMultipartFile[] fileUpload
     {
+
         System.out.println(file);
         Image newImage = new Image();
         try {
+            appUser.setImage(newImage);
+            appUserRepository.save(appUser);
             newImage.setImage(file.getBytes());
             imageRepository.save(newImage);
         } catch (IOException e) {
@@ -123,7 +129,7 @@ public class ImageController {
         }
     }
 
-//    @PostMapping("/image/save")
+    //    @PostMapping("/image/save")
 //    public String uploadImage(@RequestParam("file") MultipartFile file) {
 //
 //        if (file.isEmpty()) {
