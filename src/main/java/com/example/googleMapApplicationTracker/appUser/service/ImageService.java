@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Base64;
+
 import static com.example.googleMapApplicationTracker.appUser.utility.CompressImage.compressImage;
 
 @Service
@@ -31,24 +33,45 @@ public class ImageService {
         imageRepository.delete(image);
     }
 
-    public ApiResponse<String> saveImage(AppUser appUser, MultipartFile image) {
-        System.out.println("error 2");
-//        var appUser = appUserRepository.findById(id).
-//                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public ApiResponse<String> saveImage(AppUser appUser, String base64Image) {
         try {
             Image newImage = new Image();
-            byte[] imageBytes = image.getBytes();
-            newImage.setImage(compressImage(imageBytes));
+
+            // Decode Base64 string to byte array
+            byte[] imageBytes = Base64.getDecoder().decode(base64Image);
+
+            // You may want to compress the image or perform other processing here if needed
+            newImage.setImage(imageBytes);
+
             appUser.setImage(newImage);
             imageRepository.save(newImage);
             appUserRepository.save(appUser);
-            System.out.println("error 3");
+
             return new ApiResponse<>("Success!", false, appUser.getId(), appUser.getUsername(), appUser.getImage().getImage());
         } catch (Exception e) {
-            System.out.println("error 4");
-            return new ApiResponse<>(e.toString(), true, appUser.getId(), appUser.getUsername(), appUser.getImage().getImage());
+            log.error("Error saving image for user {}: {}", appUser.getUsername(), e.getMessage());
+            return new ApiResponse<>("Failed to save image.", true, appUser.getId(), appUser.getUsername(), null);
         }
     }
+
+//    public ApiResponse<String> saveImage(AppUser appUser, MultipartFile image) {
+//        System.out.println("error 2");
+////        var appUser = appUserRepository.findById(id).
+////                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+//        try {
+//            Image newImage = new Image();
+//            byte[] imageBytes = image.getBytes();
+//            newImage.setImage(compressImage(imageBytes));
+//            appUser.setImage(newImage);
+//            imageRepository.save(newImage);
+//            appUserRepository.save(appUser);
+//            System.out.println("error 3");
+//            return new ApiResponse<>("Success!", false, appUser.getId(), appUser.getUsername(), appUser.getImage().getImage());
+//        } catch (Exception e) {
+//            System.out.println("error 4");
+//            return new ApiResponse<>(e.toString(), true, appUser.getId(), appUser.getUsername(), appUser.getImage().getImage());
+//        }
+//    }
     @Transactional(readOnly = true)
     public ApiResponse<String> getImageByAppUserId(Long userId) {
         try {

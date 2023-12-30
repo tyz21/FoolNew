@@ -17,7 +17,6 @@ public class CorsConfig {
                         .allowedOrigins("https://gamefool.gamefi.codes")
                         .allowedMethods("*")
                         .allowedHeaders("*").maxAge(3600);;
-
             }
         };
 
