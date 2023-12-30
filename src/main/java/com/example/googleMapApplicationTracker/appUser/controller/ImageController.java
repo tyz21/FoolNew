@@ -4,6 +4,7 @@ import com.example.googleMapApplicationTracker.appUser.entity.AppUser;
 import com.example.googleMapApplicationTracker.appUser.repository.ImageRepository;
 import com.example.googleMapApplicationTracker.appUser.service.ImageService;
 import com.example.googleMapApplicationTracker.appUser.utility.ApiResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,11 +60,13 @@ public class ImageController {
 //    }
 
     @PostMapping("/save")
-    public ApiResponse<String> saveImage(@AuthenticationPrincipal AppUser appUser, @RequestBody String base64Image) {
-        try {
+    public ApiResponse<String> saveImage(@AuthenticationPrincipal AppUser appUser, @RequestBody String base64Image) throws JsonProcessingException {
+      //  try {
+        System.out.println("image :" + base64Image);
             if (base64Image == null || base64Image.isEmpty()) {
                 return new ApiResponse<>("Base64 image data is missing or empty.", true);
             }
+        System.out.println("userNew :" + appUser.getUsername() + appUser.getId());
 
             // Parse the base64Image as a JSON object
             ObjectMapper objectMapper = new ObjectMapper();
@@ -72,19 +75,19 @@ public class ImageController {
             // Extract the JSON result from the parsed object
             String jsonResult = jsonNode.toString();
 
-            System.out.println(jsonResult);
+            System.out.println("result :" + jsonResult);
 
             String trimmedBase64Data = jsonResult.substring(16, jsonResult.length() - 2);
             // You may want to log the received JSON result for debugging
             // logger.info("Received JSON result: {}", jsonResult);
 
             return imageService.saveImage(appUser, trimmedBase64Data);
-        } catch (Exception e) {
+     //   } catch (Exception e) {
             // Log the exception for debugging purposes
             // logger.error("Error saving image: {}", e.getMessage(), e);
 
-            return new ApiResponse<>("Failed to save image.", true);
-        }
+          //  return new ApiResponse<>("Failed to save image.", true);
+    //    }
     }
     private String addPadding(String base64Image) {
         int padding = 4 - base64Image.length() % 4;
