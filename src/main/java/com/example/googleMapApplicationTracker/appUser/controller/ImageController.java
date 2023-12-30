@@ -4,6 +4,8 @@ import com.example.googleMapApplicationTracker.appUser.entity.AppUser;
 import com.example.googleMapApplicationTracker.appUser.repository.ImageRepository;
 import com.example.googleMapApplicationTracker.appUser.service.ImageService;
 import com.example.googleMapApplicationTracker.appUser.utility.ApiResponse;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -36,18 +38,47 @@ public class ImageController {
 //        String base64Image = requestMap.get("base64Image");
 //        return imageService.saveImage(appUser, base64Image);
 //    }
+//    @PostMapping("/save")
+//    public ApiResponse<String> saveImage(@AuthenticationPrincipal AppUser appUser,
+//                                         @RequestBody String base64Image) {
+//        try {
+//            if (base64Image == null || base64Image.isEmpty()) {
+//                return new ApiResponse<>("Base64 image data is missing or empty.", true);
+//            }
+//
+//            // You may want to log the received Base64 image data for debugging
+//            // logger.info("Received Base64 image data: {}", base64Image);
+//
+//            return imageService.saveImage(appUser, base64Image);
+//        } catch (Exception e) {
+//            // Log the exception for debugging purposes
+//            // logger.error("Error saving image: {}", e.getMessage(), e);
+//
+//            return new ApiResponse<>("Failed to save image.", true);
+//        }
+//    }
+
     @PostMapping("/save")
-    public ApiResponse<String> saveImage(@AuthenticationPrincipal AppUser appUser,
-                                         @RequestBody String base64Image) {
+    public ApiResponse<String> saveImage(@AuthenticationPrincipal AppUser appUser, @RequestBody String base64Image) {
         try {
             if (base64Image == null || base64Image.isEmpty()) {
                 return new ApiResponse<>("Base64 image data is missing or empty.", true);
             }
 
-            // You may want to log the received Base64 image data for debugging
-            // logger.info("Received Base64 image data: {}", base64Image);
+            // Parse the base64Image as a JSON object
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(base64Image);
 
-            return imageService.saveImage(appUser, base64Image);
+            // Extract the JSON result from the parsed object
+            String jsonResult = jsonNode.toString();
+
+            System.out.println(jsonResult);
+
+            String trimmedBase64Data = jsonResult.substring(16, jsonResult.length() - 2);
+            // You may want to log the received JSON result for debugging
+            // logger.info("Received JSON result: {}", jsonResult);
+
+            return imageService.saveImage(appUser, trimmedBase64Data);
         } catch (Exception e) {
             // Log the exception for debugging purposes
             // logger.error("Error saving image: {}", e.getMessage(), e);
@@ -55,8 +86,6 @@ public class ImageController {
             return new ApiResponse<>("Failed to save image.", true);
         }
     }
-
-
     private String addPadding(String base64Image) {
         int padding = 4 - base64Image.length() % 4;
         return base64Image + "=".repeat(padding);
