@@ -38,6 +38,7 @@ public class ImageService {
             Image newImage = new Image();
 
             // Decode Base64 string to byte array
+
             byte[] imageBytes = Base64.getDecoder().decode(base64Image);
 
             // You may want to compress the image or perform other processing here if needed

@@ -38,10 +38,8 @@ public class ImageController {
 //    }
     @PostMapping("/save")
     public ApiResponse<String> saveImage(@AuthenticationPrincipal AppUser appUser,
-                                         @RequestBody Map<String, String> requestMap) {
+                                         @RequestBody String base64Image) {
         try {
-            String base64Image = requestMap.get("base64Image");
-
             if (base64Image == null || base64Image.isEmpty()) {
                 return new ApiResponse<>("Base64 image data is missing or empty.", true);
             }
