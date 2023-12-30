@@ -170,8 +170,8 @@ public class ImageController {
 //
 //        return ResponseEntity.ok().headers(headers).build();
 //    }
-//    @GetMapping("/{userId}")
-//    public ApiResponse<String> getImageByAppUserId(@PathVariable("userId") Long userId) {
-//        return imageService.getImageByAppUserId(userId);
-//    }
+    @GetMapping("/{userId}")
+    public ApiResponse<String> getImageByAppUserId(@PathVariable("userId") Long userId) {
+        return imageService.getImageByAppUserId(userId);
+    }
 }

@@ -78,15 +78,15 @@ public class ImageService {
 //            return new ApiResponse<>(e.toString(), true, appUser.getId(), appUser.getUsername(), appUser.getImage().getImage());
 //        }
 //    }
-//    @Transactional(readOnly = true)
-//    public ApiResponse<String> getImageByAppUserId(Long userId) {
-//        try {
-//            var appUser = appUserRepository.findById(userId)
-//                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//            return new ApiResponse<>("Success!", false, appUser.getId(), appUser.getUsername(), appUser.getImage().getImage());
-//        } catch (Exception e) {
-//            return new ApiResponse<>(e.toString(), true);
-//        }
-//    }
+    @Transactional(readOnly = true)
+    public ApiResponse<String> getImageByAppUserId(Long userId) {
+        try {
+            var appUser = appUserRepository.findById(userId)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            return new ApiResponse<>("Success!", false, appUser.getId(), appUser.getUsername(), appUser.getImage().getImage());
+        } catch (Exception e) {
+            return new ApiResponse<>(e.toString(), true);
+        }
+    }
 }
 

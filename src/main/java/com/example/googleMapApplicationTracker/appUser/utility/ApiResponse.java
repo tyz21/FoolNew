@@ -12,7 +12,7 @@ public class ApiResponse<T> {
     private boolean error;
     private long id;
     private String userName;
-    private String image;
+    private byte[] image;
 
     public ApiResponse(T result, boolean error) {
         this.result = result;
