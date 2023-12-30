@@ -179,7 +179,7 @@ public class ImageController {
     @Transactional(readOnly = true)
     @ResponseBody
     @RequestMapping(value = "/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ApiResponse<String> getImageByAppUserId(@RequestParam Long id) {
+    public ApiResponse<String> getImageByAppUserId(@RequestParam(value = "id", required = true)  Long id) {
         return imageService.getImageByAppUserId(id);
     }
 }
