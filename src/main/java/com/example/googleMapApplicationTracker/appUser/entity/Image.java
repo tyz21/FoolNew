@@ -17,6 +17,6 @@ public class Image implements BaseEntity<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 10000) // Example: 10 MB
-    private String image;
+    private byte [] image;
 
 }

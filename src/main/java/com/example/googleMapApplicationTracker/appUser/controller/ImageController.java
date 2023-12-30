@@ -1,6 +1,7 @@
 package com.example.googleMapApplicationTracker.appUser.controller;
 
 import com.example.googleMapApplicationTracker.appUser.entity.AppUser;
+import com.example.googleMapApplicationTracker.appUser.entity.Image;
 import com.example.googleMapApplicationTracker.appUser.repository.ImageRepository;
 import com.example.googleMapApplicationTracker.appUser.service.ImageService;
 import com.example.googleMapApplicationTracker.appUser.utility.ApiResponse;
@@ -12,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Map;
 
 
@@ -100,6 +102,13 @@ public class ImageController {
 //@RequestParam ()CommonsMultipartFile[] fileUpload
     {
         System.out.println(file);
+        Image newImage = new Image();
+        try {
+            newImage.setImage(file.getBytes());
+            imageRepository.save(newImage);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         // @RequestMapping(value="/newDocument", , method = RequestMethod.POST)
         if (!file.isEmpty()) {
             try {
@@ -162,8 +171,8 @@ public class ImageController {
 //
 //        return ResponseEntity.ok().headers(headers).build();
 //    }
-    @GetMapping("/{userId}")
-    public ApiResponse<String> getImageByAppUserId(@PathVariable("userId") Long userId) {
-        return imageService.getImageByAppUserId(userId);
-    }
+//    @GetMapping("/{userId}")
+//    public ApiResponse<String> getImageByAppUserId(@PathVariable("userId") Long userId) {
+//        return imageService.getImageByAppUserId(userId);
+//    }
 }

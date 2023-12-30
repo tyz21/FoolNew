@@ -33,32 +33,32 @@ public class ImageService {
         imageRepository.delete(image);
     }
 
-    public ApiResponse<String> saveImage(String base64Image) {
-
-       // System.out.println("newUSer 2 : " + appUser.getUsername() + appUser.getId());
-    //    try {
-            Image newImage = new Image();
-
-        System.out.println("image " + newImage.getImage());
-            // Decode Base64 string to byte array
-
-           // byte[] imageBytes = Base64.getDecoder().decode(base64Image);
-
-            // You may want to compress the image or perform other processing here if needed
-            newImage.setImage(base64Image);
-        System.out.println("is save?");
-        //    appUser.setImage(newImage);
-        System.out.println("-------------------------------");
-            imageRepository.save(newImage);
-        System.out.println("is save fo user?");
-        //    appUserRepository.save(appUser);
-
-            return new ApiResponse<>("Success!", false);
-     //   } catch (Exception e) {
-          //  log.error("Error saving image for user {}: {}", appUser.getUsername(), e.getMessage());
-         //   return new ApiResponse<>("Failed to save image.", true, appUser.getId(), appUser.getUsername(), null);
-      //  }
-    }
+//    public ApiResponse<String> saveImage(String base64Image) {
+//
+//       // System.out.println("newUSer 2 : " + appUser.getUsername() + appUser.getId());
+//    //    try {
+//            Image newImage = new Image();
+//
+//        System.out.println("image " + newImage.getImage());
+//            // Decode Base64 string to byte array
+//
+//           // byte[] imageBytes = Base64.getDecoder().decode(base64Image);
+//
+//            // You may want to compress the image or perform other processing here if needed
+//            newImage.setImage(base64Image);
+//        System.out.println("is save?");
+//        //    appUser.setImage(newImage);
+//        System.out.println("-------------------------------");
+//            imageRepository.save(newImage);
+//        System.out.println("is save fo user?");
+//        //    appUserRepository.save(appUser);
+//
+//            return new ApiResponse<>("Success!", false);
+//     //   } catch (Exception e) {
+//          //  log.error("Error saving image for user {}: {}", appUser.getUsername(), e.getMessage());
+//         //   return new ApiResponse<>("Failed to save image.", true, appUser.getId(), appUser.getUsername(), null);
+//      //  }
+//    }
 
 //    public ApiResponse<String> saveImage(AppUser appUser, MultipartFile image) {
 //        System.out.println("error 2");
@@ -78,15 +78,15 @@ public class ImageService {
 //            return new ApiResponse<>(e.toString(), true, appUser.getId(), appUser.getUsername(), appUser.getImage().getImage());
 //        }
 //    }
-    @Transactional(readOnly = true)
-    public ApiResponse<String> getImageByAppUserId(Long userId) {
-        try {
-            var appUser = appUserRepository.findById(userId)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-            return new ApiResponse<>("Success!", false, appUser.getId(), appUser.getUsername(), appUser.getImage().getImage());
-        } catch (Exception e) {
-            return new ApiResponse<>(e.toString(), true);
-        }
-    }
+//    @Transactional(readOnly = true)
+//    public ApiResponse<String> getImageByAppUserId(Long userId) {
+//        try {
+//            var appUser = appUserRepository.findById(userId)
+//                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+//            return new ApiResponse<>("Success!", false, appUser.getId(), appUser.getUsername(), appUser.getImage().getImage());
+//        } catch (Exception e) {
+//            return new ApiResponse<>(e.toString(), true);
+//        }
+//    }
 }
 
