@@ -33,9 +33,9 @@ public class ImageService {
         imageRepository.delete(image);
     }
 
-    public ApiResponse<String> saveImage(AppUser appUser, String base64Image) {
+    public ApiResponse<String> saveImage(String base64Image) {
 
-        System.out.println("newUSer 2 : " + appUser.getUsername() + appUser.getId());
+       // System.out.println("newUSer 2 : " + appUser.getUsername() + appUser.getId());
     //    try {
             Image newImage = new Image();
 
@@ -47,13 +47,13 @@ public class ImageService {
             // You may want to compress the image or perform other processing here if needed
             newImage.setImage(base64Image);
         System.out.println("is save?");
-            appUser.setImage(newImage);
+        //    appUser.setImage(newImage);
         System.out.println("-------------------------------");
             imageRepository.save(newImage);
         System.out.println("is save fo user?");
-            appUserRepository.save(appUser);
+        //    appUserRepository.save(appUser);
 
-            return new ApiResponse<>("Success!", false, appUser.getId(), appUser.getUsername(), appUser.getImage().getImage());
+            return new ApiResponse<>("Success!", false);
      //   } catch (Exception e) {
           //  log.error("Error saving image for user {}: {}", appUser.getUsername(), e.getMessage());
          //   return new ApiResponse<>("Failed to save image.", true, appUser.getId(), appUser.getUsername(), null);

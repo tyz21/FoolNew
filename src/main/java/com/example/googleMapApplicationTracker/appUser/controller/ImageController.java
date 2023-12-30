@@ -60,13 +60,13 @@ public class ImageController {
 //    }
 
     @PostMapping("/save")
-    public ApiResponse<String> saveImage(@AuthenticationPrincipal AppUser appUser, @RequestBody String base64Image) throws JsonProcessingException {
+    public ApiResponse<String> saveImage( @RequestBody String base64Image) throws JsonProcessingException {
       //  try {
         System.out.println("image :" + base64Image);
             if (base64Image == null || base64Image.isEmpty()) {
                 return new ApiResponse<>("Base64 image data is missing or empty.", true);
             }
-        System.out.println("userNew :" + appUser.getUsername() + appUser.getId());
+      //  System.out.println("userNew :" + appUser.getUsername() + appUser.getId());
 
             // Parse the base64Image as a JSON object
             ObjectMapper objectMapper = new ObjectMapper();
@@ -81,7 +81,7 @@ public class ImageController {
             // You may want to log the received JSON result for debugging
             // logger.info("Received JSON result: {}", jsonResult);
 
-            return imageService.saveImage(appUser, trimmedBase64Data);
+            return imageService.saveImage( trimmedBase64Data);
      //   } catch (Exception e) {
             // Log the exception for debugging purposes
             // logger.error("Error saving image: {}", e.getMessage(), e);
