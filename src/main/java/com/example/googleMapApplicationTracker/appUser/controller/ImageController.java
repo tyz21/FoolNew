@@ -33,9 +33,10 @@ public class ImageController {
     @ResponseBody
     @RequestMapping(value = "/save", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST)
     public ApiResponse<String> upload(
+            @RequestParam(value = "id", required = true) Long id,
             @RequestParam(value = "file", required = true) MultipartFile file)
     {
-        Image newImage = new Image();
+        Image newImage = imageRepository.findById(id).orElseThrow();
         try {
             newImage.setImage(file.getBytes());
             imageRepository.save(newImage);
@@ -45,7 +46,7 @@ public class ImageController {
         if (!file.isEmpty()) {
             try {
                 byte[] fileContent = file.getBytes();
-                return new ApiResponse<>("Success!", false);
+                return new ApiResponse<>("Success!", false, newImage.getId());
             } catch (Exception e) {
                 return new ApiResponse<>( e.getMessage(), true);
             }

@@ -1,5 +1,6 @@
 package com.example.googleMapApplicationTracker.login;
 
+import com.example.googleMapApplicationTracker.appUser.entity.AppUser;
 import com.example.googleMapApplicationTracker.appUser.repository.AppUserRepository;
 import com.example.googleMapApplicationTracker.appUser.utility.ApiResponse;
 import lombok.AllArgsConstructor;
@@ -30,19 +31,25 @@ public class LoginController {
                     userName,
                     password
             );
-            var existsUser = appUserRepository.findByUserName(userName).orElseThrow(
-                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
-            );
+            AppUser appUser;
+            var existsUser = appUserRepository.findByUserName(userName);
+            if (existsUser.isEmpty()){
+                return new ApiResponse<>("no such user", true);
+            } else {
+                appUser = existsUser.get();
+            }
             Authentication authenticated = authenticationManager.authenticate(authentication);
             if (!authenticated.isAuthenticated()) {
                 return new ApiResponse<>("user not authenticated", true);
             }
 
-            if(existsUser.getImage().getImage().length == 0) {
-                return new ApiResponse<>("Success!", false, existsUser.getId(), existsUser.getUsername(), null);
+            if(appUser.getImage().getImage() == null) {
+                 byte[] newByte = new byte[1];
+                 newByte[0] = 1;
+                return new ApiResponse<>("Success!", false, appUser.getId(), appUser.getUsername(), newByte);
             }
             SecurityContextHolder.getContext().setAuthentication(authenticated);
-            return new ApiResponse<>("Success!", false, existsUser.getId(), existsUser.getUsername(), existsUser.getImage().getImage());
+            return new ApiResponse<>("Success!", false, appUser.getId(), appUser.getUsername(), appUser.getImage().getImage());
 
         } catch (AuthenticationException e) {
             return new ApiResponse<>("check username or password", true);

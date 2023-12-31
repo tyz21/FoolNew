@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class RegistrationController {
     private final RegistrationService registrationService;
+
     @PostMapping()
     public ApiResponse<String> register(@RequestBody RegistrationRequest request) {
-         registrationService.register(request);
 
-        if (request.getUserName().equals("") || request.getPassword().equals("")){
+        if (request.getUserName().equals("") || request.getPassword().equals("")) {
             return new ApiResponse<>("Exception: username or password is null", true);
         }
-
-        return new ApiResponse<>("Success!", false, 0, request.getUserName(), null);
+        return registrationService.register(request);
+        // return new ApiResponse<>("Success!", false, 0, request.getUserName(), null);
     }
 }

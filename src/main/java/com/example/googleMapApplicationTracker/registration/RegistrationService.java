@@ -1,8 +1,10 @@
 package com.example.googleMapApplicationTracker.registration;
 
 import com.example.googleMapApplicationTracker.appUser.entity.AppUser;
+import com.example.googleMapApplicationTracker.appUser.entity.Image;
 import com.example.googleMapApplicationTracker.appUser.repository.AppUserRepository;
 import com.example.googleMapApplicationTracker.appUser.entity.AppUserRole;
+import com.example.googleMapApplicationTracker.appUser.repository.ImageRepository;
 import com.example.googleMapApplicationTracker.appUser.service.AppUserService;
 import com.example.googleMapApplicationTracker.appUser.utility.ApiResponse;
 import lombok.AllArgsConstructor;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class RegistrationService {
     private final AppUserService appUserService;
+    private final ImageRepository imageRepository;
     private final AppUserRepository appUserRepository;
 
     public ApiResponse<String> register(RegistrationRequest request) {
@@ -23,6 +26,10 @@ public class RegistrationService {
                 request.getPassword(),
                 AppUserRole.USER
         );
+
+        Image image = new Image();
+        newUser.setImage(image);
+        imageRepository.save(image);
         appUserService.signUpUser(newUser);
 
         return new ApiResponse<>("Success!", false, newUser.getId(), request.getUserName(), null);

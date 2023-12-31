@@ -19,6 +19,12 @@ public class ApiResponse<T> {
         this.error = error;
     }
 
+    public ApiResponse(T result, boolean error, long id) {
+        this.result = result;
+        this.error = error;
+        this.id = id;
+    }
+
     public static <T> ApiResponse<T> success(T result) {
         return new ApiResponse<>(result, false, 0, null, null);
     }
