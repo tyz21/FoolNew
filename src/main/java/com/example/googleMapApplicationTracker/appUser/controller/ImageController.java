@@ -1,17 +1,11 @@
 package com.example.googleMapApplicationTracker.appUser.controller;
 
-import com.example.googleMapApplicationTracker.appUser.entity.AppUser;
 import com.example.googleMapApplicationTracker.appUser.entity.Image;
-import com.example.googleMapApplicationTracker.appUser.repository.AppUserRepository;
 import com.example.googleMapApplicationTracker.appUser.repository.ImageRepository;
 import com.example.googleMapApplicationTracker.appUser.service.ImageService;
 import com.example.googleMapApplicationTracker.appUser.utility.ApiResponse;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,7 +18,6 @@ import java.io.IOException;
 public class ImageController {
     private final ImageService imageService;
     private final ImageRepository imageRepository;
-    private static final String SAVE_DIR = "/";
 
     @Autowired
     public ImageController(ImageService imageService, ImageRepository imageRepository) {
@@ -39,11 +32,9 @@ public class ImageController {
 
     @ResponseBody
     @RequestMapping(value = "/save", headers = "Content-Type= multipart/form-data", method = RequestMethod.POST)
-    public String upload(
+    public ApiResponse<String> upload(
             @RequestParam(value = "file", required = true) MultipartFile file)
     {
-
-        System.out.println(file);
         Image newImage = new Image();
         try {
             newImage.setImage(file.getBytes());
@@ -54,18 +45,13 @@ public class ImageController {
         if (!file.isEmpty()) {
             try {
                 byte[] fileContent = file.getBytes();
-                return "You successfully uploaded !";
+                return new ApiResponse<>("Success!", false);
             } catch (Exception e) {
-                return "You failed to upload   => " + e.getMessage();
+                return new ApiResponse<>( e.getMessage(), true);
             }
         } else {
-            return "You failed to upload " + " because the file was empty.";
+            return new ApiResponse<>("You failed to upload, because the file was empty", true);
         }
-    }
-
-    private String addPadding(String base64Image) {
-        int padding = 4 - base64Image.length() % 4;
-        return base64Image + "=".repeat(padding);
     }
 
     @Transactional(readOnly = true)
