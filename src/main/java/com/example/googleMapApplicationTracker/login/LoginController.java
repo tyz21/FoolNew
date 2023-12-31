@@ -38,8 +38,11 @@ public class LoginController {
                 return new ApiResponse<>("user not authenticated", true);
             }
 
+            if(existsUser.getImage().getImage().length == 0) {
+                return new ApiResponse<>("Success!", false, existsUser.getId(), existsUser.getUsername(), null);
+            }
             SecurityContextHolder.getContext().setAuthentication(authenticated);
-            return new ApiResponse<>("Success!", false, existsUser.getId(), existsUser.getUsername(), null);
+            return new ApiResponse<>("Success!", false, existsUser.getId(), existsUser.getUsername(), existsUser.getImage().getImage());
 
         } catch (AuthenticationException e) {
             return new ApiResponse<>("check username or password", true);

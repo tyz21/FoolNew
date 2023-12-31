@@ -16,8 +16,8 @@ public class CorsConfig {
                 registry.addMapping("/**")
                         .allowedOrigins("https://gamefool.gamefi.codes")
                         .allowedMethods("*")
-                        .allowedHeaders("*");
-                        //.maxAge(3600);;
+                        .allowedHeaders("*").
+                        maxAge(3600);
             }
         };
 

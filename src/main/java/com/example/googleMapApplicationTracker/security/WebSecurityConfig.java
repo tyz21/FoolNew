@@ -21,31 +21,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors().and() // Включаем поддержку CORS
+                .cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v*/registration/**", "/api/v1/login", "/image/save", "/image/get").permitAll()
+                .antMatchers("/api/v*/registration/**", "/api/v1/login", "/image/save", "/0image/get").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable();
     }
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("/api/v*/registration/**").permitAll()
-//                .antMatchers("/api/v1/login").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/api/v1/login")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll();
-//    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
@@ -64,9 +48,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-    //public class PasswordEncoder {
-//    @Bean
-//    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
+
 }
